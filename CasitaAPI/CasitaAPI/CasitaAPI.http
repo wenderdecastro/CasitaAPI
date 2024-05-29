@@ -1,0 +1,6 @@
+@CasitaAPI_HostAddress = http://localhost:5282
+
+GET {{CasitaAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
