@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "Y3bLk3v08RITDw0QgaWmKFthCpLhBtZx7WwbiIloww7O8PxTnQh0TaxA8De+kQ2tQt1WY94a8Y6x01mX6qjymg==",
+  "dgSpecHash": "A0yix0TSzBSFfWYaGqkU8uppdqAFuHiaWqTqh9UlKvEpY0sfQy7Z8Lp/uAF+K9Rif/FJMGxXqCL3yChu22y5CA==",
   "success": true,
   "projectFilePath": "C:\\Users\\57267874800\\Desktop\\Casita_WebApi\\CasitaAPI\\CasitaAPI\\CasitaAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\57267874800\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\57267874800\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
+    "C:\\Users\\57267874800\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\57267874800\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\57267874800\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\6.0.0\\microsoft.bcl.asyncinterfaces.6.0.0.nupkg.sha512",
     "C:\\Users\\57267874800\\.nuget\\packages\\microsoft.codeanalysis.analyzers\\3.3.3\\microsoft.codeanalysis.analyzers.3.3.3.nupkg.sha512",

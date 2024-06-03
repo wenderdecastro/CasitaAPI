@@ -5,7 +5,7 @@ namespace CasitaAPI.Models;
 
 public partial class User
 {
-    public string Id { get; set; } = null!;
+    public Guid Id { get; set; } = Guid.NewGuid();
 
     public string Name { get; set; } = null!;
 
@@ -21,7 +21,7 @@ public partial class User
 
     public DateTime? UpdatedAt { get; set; }
 
-    public virtual Financial IdNavigation { get; set; } = null!;
+    public virtual Financial UserFinancial { get; set; } = null!;
 
     public virtual ICollection<List> Lists { get; set; } = new List<List>();
 }
