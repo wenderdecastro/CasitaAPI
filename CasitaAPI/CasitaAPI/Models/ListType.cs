@@ -9,5 +9,7 @@ public partial class ListType
 
     public string? Description { get; set; }
 
+    public virtual ICollection<AppList> AppLists { get; set; } = new List<AppList>();
+
     public virtual ICollection<TransactionList> TransactionLists { get; set; } = new List<TransactionList>();
 }

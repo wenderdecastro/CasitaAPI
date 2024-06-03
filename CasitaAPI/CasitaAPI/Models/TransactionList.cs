@@ -7,13 +7,13 @@ public partial class TransactionList
 {
     public int Id { get; set; }
 
-    public decimal? AmountSpent { get; set; }
+    public decimal AmountSpent { get; set; }
 
     public decimal? TotalAmount { get; set; }
 
     public DateOnly? CreatedAt { get; set; }
 
-    public string? Name { get; set; }
+    public string Name { get; set; } = null!;
 
     public Guid? FinantialId { get; set; }
 
