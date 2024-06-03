@@ -17,11 +17,9 @@ public partial class AppTask
 
     public DateTime? DueDate { get; set; }
 
-    public int? StatusId { get; set; }
+    public bool? IsConcluded { get; set; }
 
     public int? FrequencyId { get; set; }
 
     public virtual List? List { get; set; }
-
-    public virtual Status? Status { get; set; }
 }

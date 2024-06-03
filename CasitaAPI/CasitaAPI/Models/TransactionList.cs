@@ -15,25 +15,21 @@ public partial class TransactionList
 
     public string? Name { get; set; }
 
-    public int? SpentTypeId { get; set; }
-
-    public string? FinantialId { get; set; }
+    public Guid? FinantialId { get; set; }
 
     public string? PhotoUrl { get; set; }
 
     public int? PriorityId { get; set; }
 
-    public int? ListTypeD { get; set; }
+    public int? ListTypeId { get; set; }
 
     public virtual Financial? Finantial { get; set; }
 
     public virtual ICollection<ListItem> ListItems { get; set; } = new List<ListItem>();
 
-    public virtual ListType? ListTypeDNavigation { get; set; }
+    public virtual ListType? ListType { get; set; }
 
     public virtual Priority? Priority { get; set; }
-
-    public virtual SpentType? SpentType { get; set; }
 
     public virtual ICollection<Transaction> Transactions { get; set; } = new List<Transaction>();
 }

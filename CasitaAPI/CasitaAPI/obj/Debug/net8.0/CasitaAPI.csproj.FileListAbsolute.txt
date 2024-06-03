@@ -134,6 +134,7 @@ C:\Users\57267874800\Desktop\Casita_WebApi\CasitaAPI\CasitaAPI\bin\Debug\net8.0\
 C:\Users\57267874800\Desktop\Casita_WebApi\CasitaAPI\CasitaAPI\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\57267874800\Desktop\Casita_WebApi\CasitaAPI\CasitaAPI\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\57267874800\Desktop\Casita_WebApi\CasitaAPI\CasitaAPI\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+<<<<<<< HEAD
 C:\Users\45922978810\Desktop\CasitaAPI\CasitaAPI\CasitaAPI\bin\Debug\net8.0\appsettings.Development.json
 C:\Users\45922978810\Desktop\CasitaAPI\CasitaAPI\CasitaAPI\bin\Debug\net8.0\appsettings.json
 C:\Users\45922978810\Desktop\CasitaAPI\CasitaAPI\CasitaAPI\bin\Debug\net8.0\CasitaAPI.exe
@@ -271,3 +272,6 @@ C:\Users\45922978810\Desktop\CasitaAPI\CasitaAPI\CasitaAPI\obj\Debug\net8.0\refi
 C:\Users\45922978810\Desktop\CasitaAPI\CasitaAPI\CasitaAPI\obj\Debug\net8.0\CasitaAPI.pdb
 C:\Users\45922978810\Desktop\CasitaAPI\CasitaAPI\CasitaAPI\obj\Debug\net8.0\CasitaAPI.genruntimeconfig.cache
 C:\Users\45922978810\Desktop\CasitaAPI\CasitaAPI\CasitaAPI\obj\Debug\net8.0\ref\CasitaAPI.dll
+=======
+C:\Users\57267874800\Desktop\Casita_WebApi\CasitaAPI\CasitaAPI\obj\Debug\net8.0\CasitaAPI.sourcelink.json
+>>>>>>> 61c4876b9fe4c6c2790a1b5e5cf6351e746af41a
