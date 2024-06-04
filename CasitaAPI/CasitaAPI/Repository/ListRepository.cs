@@ -52,6 +52,16 @@ namespace CasitaAPI.Repository
 
         }
 
+        public List<AppList> GetCustomLists(int userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<AppList> GetDefaultLists(int userId)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Update(AppList list)
         {
             try

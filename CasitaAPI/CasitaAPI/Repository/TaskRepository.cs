@@ -21,48 +21,60 @@ namespace CasitaAPI.Repository
             ctx.SaveChanges();
         }
 
-        public void Create(int listId, AppTask task)
+        public void Create(AppTask newTask)
         {
-            try
-            {
-                var newTask = new AppTask
-                {
-                    Name = task.Name,
-                    Description = task.Description,
-                    CreatedAt = DateTime.Now,
-                    DueDate = task.DueDate,
-                    FrequencyId = task.FrequencyId,
-                    ListId = listId,
-                    IsConcluded = false,
-                    PriorityId = task.PriorityId,
-
-                };
 
                 ctx.AppTasks.Add(newTask);
                 ctx.SaveChanges();
-
                 
-            }
-            catch (Exception e)
-            {
-
-                Console.WriteLine(e.InnerException);
-            }
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var task = ctx.AppTasks.Find(id);
+            ctx.AppTasks.Remove(task);
+            ctx.SaveChanges();
+
         }
 
         public void MoveToMyDay(int id)
         {
-            throw new NotImplementedException();
+            var task = ctx.AppTasks.Find(id);
+            task.ListId = 2;
+            ctx.SaveChanges();
         }
 
-        public void Update(AppTask task)
+        public void Update(int id, AppTask taskUpdate)
         {
-            throw new NotImplementedException();
+            var task = ctx.AppTasks.Find(id);
+
+            if (taskUpdate.ListId != null)
+            {
+                task.ListId = taskUpdate.ListId;
+            }
+            if (taskUpdate.Description != null)
+            {
+                task.Description = taskUpdate.Description;
+            }
+            if (taskUpdate.Name != null)
+            {
+                task.Name = taskUpdate.Name;
+            }
+            if (taskUpdate.PriorityId != null)
+            {
+                task.PriorityId = taskUpdate.PriorityId;
+            }
+            if (taskUpdate.FrequencyId != null)
+            {
+                task.FrequencyId = taskUpdate.FrequencyId;
+            }
+            if (taskUpdate.DueDate != null)
+            {
+                task.DueDate = taskUpdate.DueDate;
+            }
+            
+            ctx.AppTasks.Update(task);
+            ctx.SaveChanges();
         }
     }
 }
