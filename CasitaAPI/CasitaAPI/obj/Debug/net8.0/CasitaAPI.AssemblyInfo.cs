@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CasitaAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f992baf65aea5191e12522ee2178dd25d3e8defb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dcf2a41e2fc6817a3f762c58b821ba6ad91fe93a")]
 [assembly: System.Reflection.AssemblyProductAttribute("CasitaAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CasitaAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
