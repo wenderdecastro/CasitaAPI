@@ -87,7 +87,7 @@ namespace CasitaAPI.Repository
 
         public User GetUser(Guid id)
         {
-            return ctx.Users.FirstOrDefault(x => x.Id == id);
+            return ctx.Users.FirstOrDefault(x => x.Id == id)!;
         }
 
         public void Update(Guid id)
@@ -107,6 +107,33 @@ namespace CasitaAPI.Repository
                 Console.WriteLine(e.InnerException);
             }
             
+        }
+
+        public User SearchByEmailAndId(string email, string senha)
+        {
+            try
+            {
+                var user = ctx.Users.Select(u => new User
+                {
+                    Id = u.Id,
+                    Email = u.Email,
+                    Password = u.Password,
+                    Name = u.Name,
+                    
+                 
+                }).FirstOrDefault
+                (x => x.Email == email);
+
+                if (user == null) return null!;
+
+                if (!Cryptography.MatchHash(senha, user.Password!)) return null!;
+
+                return user;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
     }
