@@ -43,37 +43,65 @@ namespace CasitaAPI.Repository
             try
             {
                 Guid id = Guid.NewGuid();
+                var financial = user.IdNavigation;
 
                 var newUser = new User
                 {
                     Id = id,
+                    Name = user.Name,
                     Email = user.Email,
                     Password = user.Password,
                     PhotoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png",
 
-                    UserFinancial = new Financial
+                    
+
+                    IdNavigation = new Financial
                     {
                         Id = id,
                         Balance = 0,
-                        WantsPercentage = user.UserFinancial.WantsPercentage,
-                        NecessitiesPercentage = user.UserFinancial.NecessitiesPercentage,
-                        SavingsPercentage = user.UserFinancial.SavingsPercentage,
-                        ReceiptDate = user.UserFinancial.ReceiptDate,
+                        WantsPercentage = financial.WantsPercentage,
+                        NecessitiesPercentage = financial.NecessitiesPercentage,
+                        SavingsPercentage = financial.SavingsPercentage,
+                        ReceiptDate = financial.ReceiptDate,
                         TransactionLists = new List<TransactionList>
-                    {
-                        new TransactionList
                         {
-                            Name = "Lista de Compras",
-                            AmountSpent = 0,
-                            TotalAmount = null,
-                            ListTypeId = 4,
-                            FinantialId = id,
-                            PhotoUrl = null,
-                            PriorityId = null,
+                            //Criação da lista padrão de compras do usuário
+                            new TransactionList
+                            {
+                                Name = "Lista de Compras",
+                                AmountSpent = 0,
+                                TotalAmount = null,
+                                ListTypeId = 4,
+                                FinantialId = id,
+                                PhotoUrl = null,
+                                PriorityId = null,
+
+                            },
 
                         },
-                    }
-                    }
+
+                    },
+                    AppLists = new List<AppList>
+                    {
+                        //Criação das listas padrões de tarefas do usuário.
+                        new AppList
+                        {
+                            Name = "Tarefas",
+                            ListTypeId = 1
+
+                        },
+                        new AppList
+                        {
+                            Name = "Meu Dia",
+                            ListTypeId = 2
+                        }
+                        
+                    },
+                    UpdatedAt = DateTime.Now,
+                    
+
+
+
                 };
                 ctx.Add(newUser);
                 ctx.SaveChanges();
@@ -82,7 +110,7 @@ namespace CasitaAPI.Repository
             {
                 Console.WriteLine(e.InnerException);
             }
-             
+
         }
 
         public User GetUser(Guid id)
@@ -106,7 +134,7 @@ namespace CasitaAPI.Repository
             {
                 Console.WriteLine(e.InnerException);
             }
-            
+
         }
 
         public User SearchByEmailAndId(string email, string senha)

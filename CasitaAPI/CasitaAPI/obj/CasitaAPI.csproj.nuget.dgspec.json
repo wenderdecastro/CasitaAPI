@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\45922978810\\Desktop\\CasitaAPI\\CasitaAPI\\CasitaAPI\\CasitaAPI.csproj": {}
+    "C:\\Users\\57267874800\\Desktop\\Casita_WebApi\\CasitaAPI\\CasitaAPI\\CasitaAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\45922978810\\Desktop\\CasitaAPI\\CasitaAPI\\CasitaAPI\\CasitaAPI.csproj": {
+    "C:\\Users\\57267874800\\Desktop\\Casita_WebApi\\CasitaAPI\\CasitaAPI\\CasitaAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\45922978810\\Desktop\\CasitaAPI\\CasitaAPI\\CasitaAPI\\CasitaAPI.csproj",
+        "projectUniqueName": "C:\\Users\\57267874800\\Desktop\\Casita_WebApi\\CasitaAPI\\CasitaAPI\\CasitaAPI.csproj",
         "projectName": "CasitaAPI",
-        "projectPath": "C:\\Users\\45922978810\\Desktop\\CasitaAPI\\CasitaAPI\\CasitaAPI\\CasitaAPI.csproj",
-        "packagesPath": "C:\\Users\\45922978810\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\45922978810\\Desktop\\CasitaAPI\\CasitaAPI\\CasitaAPI\\obj\\",
+        "projectPath": "C:\\Users\\57267874800\\Desktop\\Casita_WebApi\\CasitaAPI\\CasitaAPI\\CasitaAPI.csproj",
+        "packagesPath": "C:\\Users\\57267874800\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\57267874800\\Desktop\\Casita_WebApi\\CasitaAPI\\CasitaAPI\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\45922978810\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\57267874800\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,6 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -40,10 +45,6 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
-            "Azure.Storage.Blobs": {
-              "target": "Package",
-              "version": "[12.20.0, )"
-            },
             "BCrypt.Net-Next": {
               "target": "Package",
               "version": "[4.0.3, )"
@@ -51,14 +52,6 @@
             "MailKit": {
               "target": "Package",
               "version": "[4.6.0, )"
-            },
-            "Microsoft.AspNetCore.Authentication.JwtBearer": {
-              "target": "Package",
-              "version": "[8.0.6, )"
-            },
-            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
-              "target": "Package",
-              "version": "[8.0.6, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
@@ -80,17 +73,9 @@
               "target": "Package",
               "version": "[8.0.5, )"
             },
-            "MimeKit": {
-              "target": "Package",
-              "version": "[4.6.0, )"
-            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
-              "version": "[6.4.0, )"
-            },
-            "System.IdentityModel.Tokens.Jwt": {
-              "target": "Package",
-              "version": "[7.6.0, )"
+              "version": "[6.6.2, )"
             }
           },
           "imports": [
