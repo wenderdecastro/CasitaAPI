@@ -16,13 +16,13 @@ public partial class CasitaContext : DbContext
     {
     }
 
+    public virtual DbSet<AppList> AppLists { get; set; }
+
     public virtual DbSet<AppTask> AppTasks { get; set; }
 
     public virtual DbSet<Financial> Financials { get; set; }
 
     public virtual DbSet<Frequency> Frequencies { get; set; }
-
-    public virtual DbSet<List> Lists { get; set; }
 
     public virtual DbSet<ListItem> ListItems { get; set; }
 
@@ -42,6 +42,38 @@ public partial class CasitaContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<AppList>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_List");
+
+            entity.ToTable("AppList");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("created_at");
+            entity.Property(e => e.Description)
+                .HasMaxLength(128)
+                .IsUnicode(false)
+                .HasColumnName("description");
+            entity.Property(e => e.ListTypeId).HasColumnName("list_type_id");
+            entity.Property(e => e.Name)
+                .HasMaxLength(32)
+                .IsUnicode(false)
+                .HasColumnName("name");
+            entity.Property(e => e.UserId).HasColumnName("user_id");
+
+            entity.HasOne(d => d.ListType).WithMany(p => p.AppLists)
+                .HasForeignKey(d => d.ListTypeId)
+                .HasConstraintName("FK_AppList_ListType");
+
+            entity.HasOne(d => d.User).WithMany(p => p.AppLists)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_List_User");
+        });
+
         modelBuilder.Entity<AppTask>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK_Task");
@@ -61,12 +93,22 @@ public partial class CasitaContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("due_date");
             entity.Property(e => e.FrequencyId).HasColumnName("frequency_id");
-            entity.Property(e => e.IsConcluded).HasColumnName("is_concluded");
+            entity.Property(e => e.IsConcluded)
+                .HasDefaultValue(false)
+                .HasColumnName("is_concluded");
             entity.Property(e => e.ListId).HasColumnName("list_id");
+            entity.Property(e => e.Name)
+                .HasMaxLength(32)
+                .HasColumnName("name");
             entity.Property(e => e.PriorityId).HasColumnName("priority_id");
+
+            entity.HasOne(d => d.Frequency).WithMany(p => p.AppTasks)
+                .HasForeignKey(d => d.FrequencyId)
+                .HasConstraintName("FK_AppTask_Frequency");
 
             entity.HasOne(d => d.List).WithMany(p => p.AppTasks)
                 .HasForeignKey(d => d.ListId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Task_List");
         });
 
@@ -96,38 +138,11 @@ public partial class CasitaContext : DbContext
         {
             entity.ToTable("Frequency");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Description)
                 .HasMaxLength(10)
                 .IsFixedLength()
                 .HasColumnName("description");
-        });
-
-        modelBuilder.Entity<List>(entity =>
-        {
-            entity.ToTable("List");
-
-            entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.CreatedAt)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
-                .HasColumnName("created_at");
-            entity.Property(e => e.Description)
-                .HasMaxLength(128)
-                .IsUnicode(false)
-                .HasColumnName("description");
-            entity.Property(e => e.Name)
-                .HasMaxLength(32)
-                .IsUnicode(false)
-                .HasColumnName("name");
-            entity.Property(e => e.UserId).HasColumnName("user_id");
-
-            entity.HasOne(d => d.User).WithMany(p => p.Lists)
-                .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_List_User");
         });
 
         modelBuilder.Entity<ListItem>(entity =>
@@ -167,9 +182,7 @@ public partial class CasitaContext : DbContext
         {
             entity.ToTable("ListType");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Description)
                 .HasMaxLength(50)
                 .IsUnicode(false)
@@ -180,9 +193,7 @@ public partial class CasitaContext : DbContext
         {
             entity.ToTable("Priority");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Description)
                 .HasMaxLength(16)
                 .IsUnicode(false)
@@ -193,9 +204,7 @@ public partial class CasitaContext : DbContext
         {
             entity.ToTable("Transaction");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")
@@ -223,9 +232,7 @@ public partial class CasitaContext : DbContext
         {
             entity.ToTable("TransactionList");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.AmountSpent)
                 .HasColumnType("money")
                 .HasColumnName("amount_spent");
@@ -294,7 +301,7 @@ public partial class CasitaContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("updated_at");
 
-            entity.HasOne(d => d.UserFinancial).WithOne(p => p.User)
+            entity.HasOne(d => d.IdNavigation).WithOne(p => p.User)
                 .HasForeignKey<User>(d => d.Id)
                 .HasConstraintName("FK_User_Financial");
         });

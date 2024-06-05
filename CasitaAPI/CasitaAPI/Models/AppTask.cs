@@ -11,7 +11,7 @@ public partial class AppTask
 
     public int? PriorityId { get; set; }
 
-    public int? ListId { get; set; }
+    public int ListId { get; set; }
 
     public string? Description { get; set; }
 
@@ -21,5 +21,9 @@ public partial class AppTask
 
     public int? FrequencyId { get; set; }
 
-    public virtual List? List { get; set; }
+    public string Name { get; set; } = null!;
+
+    public virtual Frequency? Frequency { get; set; }
+
+    public virtual AppList List { get; set; } = null!;
 }
