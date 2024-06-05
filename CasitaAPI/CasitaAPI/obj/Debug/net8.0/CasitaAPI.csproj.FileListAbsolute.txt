@@ -275,3 +275,16 @@ C:\Users\45922978810\Desktop\CasitaAPI\CasitaAPI\CasitaAPI\obj\Debug\net8.0\ref\
 =======
 C:\Users\57267874800\Desktop\Casita_WebApi\CasitaAPI\CasitaAPI\obj\Debug\net8.0\CasitaAPI.sourcelink.json
 >>>>>>> 61c4876b9fe4c6c2790a1b5e5cf6351e746af41a
+C:\Users\45922978810\Desktop\CasitaAPI\CasitaAPI\CasitaAPI\bin\Debug\net8.0\Azure.Storage.Blobs.dll
+C:\Users\45922978810\Desktop\CasitaAPI\CasitaAPI\CasitaAPI\bin\Debug\net8.0\Azure.Storage.Common.dll
+C:\Users\45922978810\Desktop\CasitaAPI\CasitaAPI\CasitaAPI\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\Users\45922978810\Desktop\CasitaAPI\CasitaAPI\CasitaAPI\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
+C:\Users\45922978810\Desktop\CasitaAPI\CasitaAPI\CasitaAPI\bin\Debug\net8.0\MailKit.dll
+C:\Users\45922978810\Desktop\CasitaAPI\CasitaAPI\CasitaAPI\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\45922978810\Desktop\CasitaAPI\CasitaAPI\CasitaAPI\bin\Debug\net8.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\45922978810\Desktop\CasitaAPI\CasitaAPI\CasitaAPI\bin\Debug\net8.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\Users\45922978810\Desktop\CasitaAPI\CasitaAPI\CasitaAPI\bin\Debug\net8.0\MimeKit.dll
+C:\Users\45922978810\Desktop\CasitaAPI\CasitaAPI\CasitaAPI\bin\Debug\net8.0\Newtonsoft.Json.dll
+C:\Users\45922978810\Desktop\CasitaAPI\CasitaAPI\CasitaAPI\bin\Debug\net8.0\Newtonsoft.Json.Bson.dll
+C:\Users\45922978810\Desktop\CasitaAPI\CasitaAPI\CasitaAPI\bin\Debug\net8.0\System.ClientModel.dll
+C:\Users\45922978810\Desktop\CasitaAPI\CasitaAPI\CasitaAPI\bin\Debug\net8.0\System.IO.Hashing.dll
