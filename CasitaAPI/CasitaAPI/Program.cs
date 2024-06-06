@@ -1,3 +1,5 @@
+using CasitaAPI.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,6 +29,29 @@ builder.Services.AddSwaggerGen(options =>
         //}
     });
 });
+
+var connection = String.Empty;
+if (builder.Environment.IsDevelopment())
+{
+    builder.Configuration.AddEnvironmentVariables().AddJsonFile("appsettings.Development.json");
+    connection = builder.Configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING");
+}
+else
+{
+    connection = Environment.GetEnvironmentVariable("AZURE_SQL_CONNECTIONSTRING");
+}
+
+//builder.Services.AddAzureClients(x =>
+//{
+//    x.AddBlobServiceClient(new Uri("https://<account-name>.blob.core.windows.net"));
+//    x.UseCredential(new DefaultAzureCredential());
+//});
+
+//builder.Services.AddDbContext<CasitaContext>(options =>
+//    options.UseSqlServer(connection));
+
+//builder.Services.AddControllers().AddNewtonsoftJson();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
