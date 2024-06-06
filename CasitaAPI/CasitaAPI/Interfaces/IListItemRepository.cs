@@ -5,8 +5,8 @@ namespace CasitaAPI.Interfaces
     public interface IListItemRepository
     {
         public void Create(ListItem item);
-        public void Update(ListItem item);
+        public void Update(int id, ListItem item);
         public void Delete(int id);
-        public void Conclude();
+        public string Conclude(int taskId);
     }
 }
