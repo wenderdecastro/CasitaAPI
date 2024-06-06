@@ -52,14 +52,15 @@ namespace CasitaAPI.Repository
 
         }
 
-        public List<AppList> GetCustomLists(int userId)
+        public List<AppList> GetCustomLists(Guid userId)
         {
-            throw new NotImplementedException();
+            return ctx.AppLists.Where(x=> x.UserId == userId && x.ListTypeId == 6).ToList();
         }
 
-        public List<AppList> GetDefaultLists(int userId)
+        public List<AppList> GetDefaultLists(Guid userId)
         {
-            throw new NotImplementedException();
+            return ctx.AppLists.Where(x => x.UserId == userId && x.ListTypeId != 6).ToList();
+
         }
 
         public void Update(AppList list)
