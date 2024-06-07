@@ -37,6 +37,24 @@
             await emailService.SendEmailAsync(request);
         }
 
+        public async Task SendRecoveryEmail(string email, int codigo)
+        {
+            try
+            {
+                MailRequest request = new MailRequest
+                {
+                    ToEmail = email,
+                    Subject = "Recuperação de senha",
+                    Body = GetHtmlContentRecovery(codigo)
+                };
+
+                await emailService.SendEmailAsync(request);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
         private string GetHtmlContent(string userName)
         {
 
