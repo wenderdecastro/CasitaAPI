@@ -18,7 +18,7 @@ namespace CasitaAPI.Controllers
             _taskRepository = new TaskRepository();
         }
 
-        [HttpDelete("delete/{id}")]
+        [HttpDelete]
         public IActionResult Delete(int id)
         {
             try
@@ -32,7 +32,7 @@ namespace CasitaAPI.Controllers
             }
         }
 
-        [HttpPatch("update/{id}")]
+        [HttpPatch("{id}")]
         public IActionResult Update(int id, AppTask taskUpdate)
         {
             try
@@ -46,7 +46,7 @@ namespace CasitaAPI.Controllers
             }
         }
 
-        [HttpPost("create")]
+        [HttpPost]
         public IActionResult Create(int listId, AppTask task)
         {
             try
