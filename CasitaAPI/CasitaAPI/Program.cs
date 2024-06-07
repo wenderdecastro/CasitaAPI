@@ -1,4 +1,5 @@
 using CasitaAPI.Data;
+using CasitaAPI.Utils.Mail;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -29,6 +30,16 @@ builder.Services.AddSwaggerGen(options =>
         //}
     });
 });
+builder.Services.AddDbContext<CasitaContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("SqlDataBase")));
+
+// Configure EmailSettings
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection(nameof(EmailSettings)));
+
+// Registrando o serviço de e-mail como uma instância transitória, que é criada cada vez que é solicitada
+builder.Services.AddTransient<IEmailService, EmailService>();
+
+builder.Services.AddScoped<EmailSendingService>();
 
 var connection = String.Empty;
 if (builder.Environment.IsDevelopment())

@@ -23,7 +23,7 @@ namespace CasitaAPI.Repository
                 ctx.ListItems.Update(nonCloncluded);
                 ctx.SaveChanges();
 
-                return "Parabens por comprir uma tarefa";
+                return "Parabens por comprir a lista de tarefas";
             }
             else
             {
