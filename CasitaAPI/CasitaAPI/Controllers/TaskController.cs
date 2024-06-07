@@ -18,7 +18,7 @@ namespace CasitaAPI.Controllers
             _taskRepository = new TaskRepository();
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
             try
@@ -30,6 +30,12 @@ namespace CasitaAPI.Controllers
             {
                 return BadRequest(e.InnerException);
             }
+        }
+
+        [HttpGet]
+        public IActionResult GetAll(Guid userId) {
+            var taskList = _taskRepository.GetAll(userId);
+            return Ok(taskList);
         }
 
         [HttpPatch("{id}")]

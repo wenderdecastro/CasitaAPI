@@ -9,5 +9,7 @@ namespace CasitaAPI.Interfaces
         public void Delete(int id);
         public void AlterStatus(int id);
         public void MoveToMyDay(int id);
+
+        public List<AppTask> GetAll(Guid userId);
     }
 }

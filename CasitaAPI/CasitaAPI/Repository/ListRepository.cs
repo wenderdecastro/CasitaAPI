@@ -7,11 +7,11 @@ namespace CasitaAPI.Repository
 {
     public class ListRepository : IListRepository
     {
-        private readonly CasitaContext ctx;
+        private readonly CasitaDbContext ctx;
 
         public ListRepository()
         {
-            ctx = new CasitaContext();
+            ctx = new CasitaDbContext();
         }
 
         public void Create(AppList list)
@@ -29,10 +29,13 @@ namespace CasitaAPI.Repository
 
                 ctx.Add(newList);
                 ctx.SaveChanges();
+
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.InnerException);
+
+
             }
 
         }
@@ -52,9 +55,14 @@ namespace CasitaAPI.Repository
 
         }
 
+        public List<AppList> GetAllLists(Guid userId)
+        {
+            return ctx.AppLists.Where(x => x.UserId == userId).ToList();
+        }
+
         public List<AppList> GetCustomLists(Guid userId)
         {
-            return ctx.AppLists.Where(x=> x.UserId == userId && x.ListTypeId == 6).ToList();
+            return ctx.AppLists.Where(x => x.UserId == userId && x.ListTypeId == 6).ToList();
         }
 
         public List<AppList> GetDefaultLists(Guid userId)
@@ -62,6 +70,40 @@ namespace CasitaAPI.Repository
             return ctx.AppLists.Where(x => x.UserId == userId && x.ListTypeId != 6).ToList();
 
         }
+
+        public List<AppList> GetDateLists(Guid userId, int option)
+        {
+            var today = DateOnly.FromDateTime(DateTime.Now);
+            var NextTasks = ctx.AppTasks.Where(x => x.List.UserId == userId && x.DueDate.Value > today).ToList();
+
+            var nextList = new AppList
+            {
+                Name = "Diarias",
+                AppTasks = NextTasks,
+            };
+
+            var weeklyTasks = ctx.AppTasks.Where(x => x.List.UserId == userId && x.FrequencyId == 3).ToList();
+
+            var weeklyList = new AppList
+            {
+                Name = "Semanais",
+                AppTasks = weeklyTasks,
+            };
+
+
+            var montlyTasks = ctx.AppTasks.Where(x => x.List.UserId == userId && x.FrequencyId == 4).ToList();
+
+            var montlyList = new AppList
+            {
+                Name = "Mensais",
+                AppTasks = montlyTasks,
+            };
+
+            List<AppList> list = new List<AppList> { nextList, weeklyList, montlyList };
+
+            return list;
+        }
+
 
         public void Update(AppList list)
         {

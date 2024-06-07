@@ -6,11 +6,11 @@ namespace CasitaAPI.Repository
 {
     public class TaskRepository : ITaskRepository
     {
-        private readonly CasitaContext ctx;
+        private readonly CasitaDbContext ctx;
 
         public TaskRepository()
         {
-            ctx = new CasitaContext();
+            ctx = new CasitaDbContext();
         }
 
         public void AlterStatus(int id)
@@ -75,6 +75,11 @@ namespace CasitaAPI.Repository
             
             ctx.AppTasks.Update(task);
             ctx.SaveChanges();
+        }
+
+        public List<AppTask> GetAll(Guid userId)
+        {
+            return (ctx.AppTasks.Where(x => x.List.UserId == userId).ToList());
         }
     }
 }

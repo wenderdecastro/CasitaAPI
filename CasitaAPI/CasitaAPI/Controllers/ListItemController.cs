@@ -7,5 +7,6 @@ namespace CasitaAPI.Controllers
     [ApiController]
     public class ListItemController : ControllerBase
     {
+
     }
 }

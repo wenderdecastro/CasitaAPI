@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CasitaAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -31,7 +31,8 @@ namespace CasitaAPI.Migrations
                 name: "Frequency",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false),
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     description = table.Column<string>(type: "nchar(10)", fixedLength: true, maxLength: 10, nullable: true)
                 },
                 constraints: table =>
@@ -43,7 +44,8 @@ namespace CasitaAPI.Migrations
                 name: "ListType",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false),
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     description = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: true)
                 },
                 constraints: table =>
@@ -55,7 +57,8 @@ namespace CasitaAPI.Migrations
                 name: "Priority",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false),
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     description = table.Column<string>(type: "varchar(16)", unicode: false, maxLength: 16, nullable: false)
                 },
                 constraints: table =>
@@ -70,7 +73,7 @@ namespace CasitaAPI.Migrations
                     id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "(newid())"),
                     name = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
                     email = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    password = table.Column<string>(type: "varchar(36)", unicode: false, maxLength: 36, nullable: false),
+                    password = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     recovery_code = table.Column<string>(type: "char(4)", unicode: false, fixedLength: true, maxLength: 4, nullable: true),
                     photo_url = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
                     created_at = table.Column<DateOnly>(type: "date", nullable: false, defaultValueSql: "(getdate())"),
@@ -91,15 +94,17 @@ namespace CasitaAPI.Migrations
                 name: "TransactionList",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false),
-                    amount_spent = table.Column<decimal>(type: "money", nullable: true),
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    amount_spent = table.Column<decimal>(type: "money", nullable: false),
                     total_amount = table.Column<decimal>(type: "money", nullable: true),
                     created_at = table.Column<DateOnly>(type: "date", nullable: true, defaultValueSql: "(getdate())"),
-                    name = table.Column<string>(type: "varchar(32)", unicode: false, maxLength: 32, nullable: true),
+                    name = table.Column<string>(type: "varchar(32)", unicode: false, maxLength: 32, nullable: false),
                     finantial_id = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     photo_url = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
                     priority_id = table.Column<int>(type: "int", nullable: true),
-                    list_type_id = table.Column<int>(type: "int", nullable: true)
+                    list_type_id = table.Column<int>(type: "int", nullable: true),
+                    renovation_date = table.Column<DateOnly>(type: "date", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -122,7 +127,7 @@ namespace CasitaAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "List",
+                name: "AppList",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
@@ -130,11 +135,17 @@ namespace CasitaAPI.Migrations
                     user_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     name = table.Column<string>(type: "varchar(32)", unicode: false, maxLength: 32, nullable: false),
                     description = table.Column<string>(type: "varchar(128)", unicode: false, maxLength: 128, nullable: true),
-                    created_at = table.Column<DateTime>(type: "datetime", nullable: true, defaultValueSql: "(getdate())")
+                    created_at = table.Column<DateTime>(type: "datetime", nullable: true, defaultValueSql: "(getdate())"),
+                    list_type_id = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_List", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_AppList_ListType",
+                        column: x => x.list_type_id,
+                        principalTable: "ListType",
+                        principalColumn: "id");
                     table.ForeignKey(
                         name: "FK_List_User",
                         column: x => x.user_id,
@@ -173,7 +184,8 @@ namespace CasitaAPI.Migrations
                 name: "Transaction",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false),
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     value = table.Column<decimal>(type: "money", nullable: true),
                     created_at = table.Column<DateTime>(type: "datetime", nullable: true, defaultValueSql: "(getdate())"),
                     name = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: true),
@@ -203,31 +215,49 @@ namespace CasitaAPI.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     created_at = table.Column<DateTime>(type: "datetime", nullable: true, defaultValueSql: "(getdate())"),
                     priority_id = table.Column<int>(type: "int", nullable: true),
-                    list_id = table.Column<int>(type: "int", nullable: true),
+                    list_id = table.Column<int>(type: "int", nullable: false),
                     description = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: true),
-                    due_date = table.Column<DateTime>(type: "datetime", nullable: true),
-                    is_concluded = table.Column<bool>(type: "bit", nullable: true),
-                    frequency_id = table.Column<int>(type: "int", nullable: true)
+                    due_date = table.Column<DateOnly>(type: "date", nullable: true),
+                    is_concluded = table.Column<bool>(type: "bit", nullable: true, defaultValue: false),
+                    frequency_id = table.Column<int>(type: "int", nullable: true),
+                    concluded_date = table.Column<DateTime>(type: "datetime", nullable: true),
+                    name = table.Column<string>(type: "nvarchar(32)", maxLength: 32, nullable: false),
+                    due_time = table.Column<TimeOnly>(type: "time(0)", precision: 0, nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Task", x => x.id);
                     table.ForeignKey(
+                        name: "FK_AppTask_Frequency",
+                        column: x => x.frequency_id,
+                        principalTable: "Frequency",
+                        principalColumn: "id");
+                    table.ForeignKey(
                         name: "FK_Task_List",
                         column: x => x.list_id,
-                        principalTable: "List",
+                        principalTable: "AppList",
                         principalColumn: "id");
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AppList_list_type_id",
+                table: "AppList",
+                column: "list_type_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AppList_user_id",
+                table: "AppList",
+                column: "user_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AppTask_frequency_id",
+                table: "AppTask",
+                column: "frequency_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AppTask_list_id",
                 table: "AppTask",
                 column: "list_id");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_List_user_id",
-                table: "List",
-                column: "user_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ListItem_list_id",
@@ -278,7 +308,7 @@ namespace CasitaAPI.Migrations
                 name: "Transaction");
 
             migrationBuilder.DropTable(
-                name: "List");
+                name: "AppList");
 
             migrationBuilder.DropTable(
                 name: "Frequency");

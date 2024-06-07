@@ -29,7 +29,7 @@ namespace CasitaAPI.Controllers
             try
             {
                 //busca usuário por email e senha 
-                User usuarioBuscado = _userRepository.SearchByEmailAndId(user.Email!, user.Password!);
+                User usuarioBuscado = _userRepository.GetByEmailAndPwd(user.Email!, user.Password!);
 
                 //caso não encontre
                 if (usuarioBuscado == null)

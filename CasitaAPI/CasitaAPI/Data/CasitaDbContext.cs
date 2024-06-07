@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CasitaAPI.Data;
 
-public partial class CasitaContext : DbContext
+public partial class CasitaDbContext : DbContext
 {
-    public CasitaContext()
+    public CasitaDbContext()
     {
     }
 
-    public CasitaContext(DbContextOptions<CasitaContext> options)
+    public CasitaDbContext(DbContextOptions<CasitaDbContext> options)
         : base(options)
     {
     }
@@ -38,7 +38,7 @@ public partial class CasitaContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=tcp:casitaserver.database.windows.net,1433;Initial Catalog=CasitaDB;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;Authentication=\"Active Directory Default\";");
+        => optionsBuilder.UseSqlServer("Server=casitaserver.database.windows.net,1433;Initial Catalog=CasitaDB;Persist Security Info=False;User ID=Enzo;Password=Senai@134;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -81,6 +81,9 @@ public partial class CasitaContext : DbContext
             entity.ToTable("AppTask");
 
             entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.ConcludedDate)
+                .HasColumnType("datetime")
+                .HasColumnName("concluded_date");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")
@@ -89,9 +92,10 @@ public partial class CasitaContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("description");
-            entity.Property(e => e.DueDate)
-                .HasColumnType("datetime")
-                .HasColumnName("due_date");
+            entity.Property(e => e.DueDate).HasColumnName("due_date");
+            entity.Property(e => e.DueTime)
+                .HasPrecision(0)
+                .HasColumnName("due_time");
             entity.Property(e => e.FrequencyId).HasColumnName("frequency_id");
             entity.Property(e => e.IsConcluded)
                 .HasDefaultValue(false)
@@ -101,6 +105,7 @@ public partial class CasitaContext : DbContext
                 .HasMaxLength(32)
                 .HasColumnName("name");
             entity.Property(e => e.PriorityId).HasColumnName("priority_id");
+            entity.Property(e => e.ResetDate).HasColumnName("reset_date");
 
             entity.HasOne(d => d.Frequency).WithMany(p => p.AppTasks)
                 .HasForeignKey(d => d.FrequencyId)
@@ -108,7 +113,6 @@ public partial class CasitaContext : DbContext
 
             entity.HasOne(d => d.List).WithMany(p => p.AppTasks)
                 .HasForeignKey(d => d.ListId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Task_List");
         });
 
@@ -249,6 +253,7 @@ public partial class CasitaContext : DbContext
                 .HasMaxLength(128)
                 .HasColumnName("photo_url");
             entity.Property(e => e.PriorityId).HasColumnName("priority_id");
+            entity.Property(e => e.RenovationDate).HasColumnName("renovation_date");
             entity.Property(e => e.TotalAmount)
                 .HasColumnType("money")
                 .HasColumnName("total_amount");
@@ -286,8 +291,7 @@ public partial class CasitaContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("name");
             entity.Property(e => e.Password)
-                .HasMaxLength(36)
-                .IsUnicode(false)
+                .HasMaxLength(64)
                 .HasColumnName("password");
             entity.Property(e => e.PhotoUrl)
                 .HasMaxLength(128)

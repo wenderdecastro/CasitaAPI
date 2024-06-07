@@ -23,6 +23,8 @@ public partial class TransactionList
 
     public int? ListTypeId { get; set; }
 
+    public DateOnly? RenovationDate { get; set; }
+
     public virtual Financial? Finantial { get; set; }
 
     public virtual ICollection<ListItem> ListItems { get; set; } = new List<ListItem>();

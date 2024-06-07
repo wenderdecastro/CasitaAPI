@@ -9,5 +9,7 @@ namespace CasitaAPI.Interfaces
         public List<AppList> GetCustomLists(Guid userId);
         public void Update(AppList list);
         public void Delete(int id);
+
+        public List<AppList> GetAllLists (Guid userId);
     }
 }
