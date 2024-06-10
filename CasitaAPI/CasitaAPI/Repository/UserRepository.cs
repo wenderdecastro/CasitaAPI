@@ -8,11 +8,11 @@ namespace CasitaAPI.Repository
     public class UserRepository : IUserRepository
     {
 
-        private readonly CasitaContext ctx;
+        private readonly CasitaDbContext ctx;
 
         public UserRepository()
         {
-            ctx = new CasitaContext();
+            ctx = new CasitaDbContext();
         }
 
         public bool ChangePassword(string email, string newPassword)
@@ -50,8 +50,7 @@ namespace CasitaAPI.Repository
                     Id = id,
                     Name = user.Name,
                     Email = user.Email,
-                    Password = user.Password,
-                    PhotoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png",
+                    Password = Cryptography.GenerateHash(user.Password),
 
                     
 
@@ -94,14 +93,16 @@ namespace CasitaAPI.Repository
                         {
                             Name = "Meu Dia",
                             ListTypeId = 2
+                        },
+                        new AppList
+                        {
+                            Name = "Metas",
+                            ListTypeId = 3
                         }
-                        
+
                     },
                     UpdatedAt = DateTime.Now,
                     
-
-
-
                 };
                 ctx.Add(newUser);
                 ctx.SaveChanges();
@@ -137,7 +138,7 @@ namespace CasitaAPI.Repository
 
         }
 
-        public User SearchByEmailAndId(string email, string senha)
+        public User GetByEmailAndPwd(string email, string senha)
         {
             try
             {
@@ -164,6 +165,10 @@ namespace CasitaAPI.Repository
             }
         }
 
+        public List<User> GetAll()
+        {
+            return ctx.Users.ToList();
+        }
     }
 
 

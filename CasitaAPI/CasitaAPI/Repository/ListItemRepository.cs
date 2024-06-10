@@ -7,11 +7,11 @@ namespace CasitaAPI.Repository
     public class ListItemRepository : IListItemRepository
     {
 
-        private readonly CasitaContext ctx;
+        private readonly CasitaDbContext ctx;
 
         public ListItemRepository()
         {
-            ctx = new CasitaContext();
+            ctx = new CasitaDbContext();
         }
         public string Conclude(int id)
         {

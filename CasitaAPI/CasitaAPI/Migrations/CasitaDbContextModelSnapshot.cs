@@ -10,19 +10,19 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CasitaAPI.Migrations
 {
-    [DbContext(typeof(CasitaContext))]
-    partial class CasitaContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(CasitaDbContext))]
+    partial class CasitaDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.5")
+                .HasAnnotation("ProductVersion", "8.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("CasitaAPI.Models.AppTask", b =>
+            modelBuilder.Entity("CasitaAPI.Models.AppList", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -38,26 +38,89 @@ namespace CasitaAPI.Migrations
                         .HasDefaultValueSql("(getdate())");
 
                     b.Property<string>("Description")
+                        .HasMaxLength(128)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(128)")
+                        .HasColumnName("description");
+
+                    b.Property<int?>("ListTypeId")
+                        .HasColumnType("int")
+                        .HasColumnName("list_type_id");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(32)")
+                        .HasColumnName("name");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("Id")
+                        .HasName("PK_List");
+
+                    b.HasIndex("ListTypeId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AppList", (string)null);
+                });
+
+            modelBuilder.Entity("CasitaAPI.Models.AppTask", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("ConcludedDate")
+                        .HasColumnType("datetime")
+                        .HasColumnName("concluded_date");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasColumnName("created_at")
+                        .HasDefaultValueSql("(getdate())");
+
+                    b.Property<string>("Description")
                         .HasMaxLength(50)
                         .IsUnicode(false)
                         .HasColumnType("varchar(50)")
                         .HasColumnName("description");
 
-                    b.Property<DateTime?>("DueDate")
-                        .HasColumnType("datetime")
+                    b.Property<DateOnly?>("DueDate")
+                        .HasColumnType("date")
                         .HasColumnName("due_date");
+
+                    b.Property<TimeOnly?>("DueTime")
+                        .HasPrecision(0)
+                        .HasColumnType("time(0)")
+                        .HasColumnName("due_time");
 
                     b.Property<int?>("FrequencyId")
                         .HasColumnType("int")
                         .HasColumnName("frequency_id");
 
                     b.Property<bool?>("IsConcluded")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
+                        .HasDefaultValue(false)
                         .HasColumnName("is_concluded");
 
-                    b.Property<int?>("ListId")
+                    b.Property<int>("ListId")
                         .HasColumnType("int")
                         .HasColumnName("list_id");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)")
+                        .HasColumnName("name");
 
                     b.Property<int?>("PriorityId")
                         .HasColumnType("int")
@@ -65,6 +128,8 @@ namespace CasitaAPI.Migrations
 
                     b.HasKey("Id")
                         .HasName("PK_Task");
+
+                    b.HasIndex("FrequencyId");
 
                     b.HasIndex("ListId");
 
@@ -105,8 +170,11 @@ namespace CasitaAPI.Migrations
             modelBuilder.Entity("CasitaAPI.Models.Frequency", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
                         .HasMaxLength(10)
@@ -117,45 +185,6 @@ namespace CasitaAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Frequency", (string)null);
-                });
-
-            modelBuilder.Entity("CasitaAPI.Models.List", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime?>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasColumnName("created_at")
-                        .HasDefaultValueSql("(getdate())");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(128)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(128)")
-                        .HasColumnName("description");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(32)")
-                        .HasColumnName("name");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("user_id");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("List", (string)null);
                 });
 
             modelBuilder.Entity("CasitaAPI.Models.ListItem", b =>
@@ -205,8 +234,11 @@ namespace CasitaAPI.Migrations
             modelBuilder.Entity("CasitaAPI.Models.ListType", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
                         .HasMaxLength(50)
@@ -222,8 +254,11 @@ namespace CasitaAPI.Migrations
             modelBuilder.Entity("CasitaAPI.Models.Priority", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -240,8 +275,11 @@ namespace CasitaAPI.Migrations
             modelBuilder.Entity("CasitaAPI.Models.Transaction", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime?>("CreatedAt")
                         .ValueGeneratedOnAdd()
@@ -279,10 +317,13 @@ namespace CasitaAPI.Migrations
             modelBuilder.Entity("CasitaAPI.Models.TransactionList", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("id");
 
-                    b.Property<decimal?>("AmountSpent")
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("AmountSpent")
                         .HasColumnType("money")
                         .HasColumnName("amount_spent");
 
@@ -301,6 +342,7 @@ namespace CasitaAPI.Migrations
                         .HasColumnName("list_type_id");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasMaxLength(32)
                         .IsUnicode(false)
                         .HasColumnType("varchar(32)")
@@ -314,6 +356,10 @@ namespace CasitaAPI.Migrations
                     b.Property<int?>("PriorityId")
                         .HasColumnType("int")
                         .HasColumnName("priority_id");
+
+                    b.Property<DateOnly?>("RenovationDate")
+                        .HasColumnType("date")
+                        .HasColumnName("renovation_date");
 
                     b.Property<decimal?>("TotalAmount")
                         .HasColumnType("money")
@@ -359,9 +405,8 @@ namespace CasitaAPI.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(36)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(36)")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)")
                         .HasColumnName("password");
 
                     b.Property<string>("PhotoUrl")
@@ -386,25 +431,39 @@ namespace CasitaAPI.Migrations
                     b.ToTable("User", (string)null);
                 });
 
-            modelBuilder.Entity("CasitaAPI.Models.AppTask", b =>
+            modelBuilder.Entity("CasitaAPI.Models.AppList", b =>
                 {
-                    b.HasOne("CasitaAPI.Models.List", "List")
-                        .WithMany("AppTasks")
-                        .HasForeignKey("ListId")
-                        .HasConstraintName("FK_Task_List");
+                    b.HasOne("CasitaAPI.Models.ListType", "ListType")
+                        .WithMany("AppLists")
+                        .HasForeignKey("ListTypeId")
+                        .HasConstraintName("FK_AppList_ListType");
 
-                    b.Navigation("List");
-                });
-
-            modelBuilder.Entity("CasitaAPI.Models.List", b =>
-                {
                     b.HasOne("CasitaAPI.Models.User", "User")
-                        .WithMany("Lists")
+                        .WithMany("AppLists")
                         .HasForeignKey("UserId")
                         .IsRequired()
                         .HasConstraintName("FK_List_User");
 
+                    b.Navigation("ListType");
+
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("CasitaAPI.Models.AppTask", b =>
+                {
+                    b.HasOne("CasitaAPI.Models.Frequency", "Frequency")
+                        .WithMany("AppTasks")
+                        .HasForeignKey("FrequencyId")
+                        .HasConstraintName("FK_AppTask_Frequency");
+
+                    b.HasOne("CasitaAPI.Models.AppList", "List")
+                        .WithMany("AppTasks")
+                        .HasForeignKey("ListId")
+                        .HasConstraintName("FK_Task_List");
+
+                    b.Navigation("Frequency");
+
+                    b.Navigation("List");
                 });
 
             modelBuilder.Entity("CasitaAPI.Models.ListItem", b =>
@@ -479,6 +538,11 @@ namespace CasitaAPI.Migrations
                     b.Navigation("IdNavigation");
                 });
 
+            modelBuilder.Entity("CasitaAPI.Models.AppList", b =>
+                {
+                    b.Navigation("AppTasks");
+                });
+
             modelBuilder.Entity("CasitaAPI.Models.Financial", b =>
                 {
                     b.Navigation("TransactionLists");
@@ -488,16 +552,15 @@ namespace CasitaAPI.Migrations
 
             modelBuilder.Entity("CasitaAPI.Models.Frequency", b =>
                 {
-                    b.Navigation("Transactions");
-                });
-
-            modelBuilder.Entity("CasitaAPI.Models.List", b =>
-                {
                     b.Navigation("AppTasks");
+
+                    b.Navigation("Transactions");
                 });
 
             modelBuilder.Entity("CasitaAPI.Models.ListType", b =>
                 {
+                    b.Navigation("AppLists");
+
                     b.Navigation("TransactionLists");
                 });
 
@@ -517,7 +580,7 @@ namespace CasitaAPI.Migrations
 
             modelBuilder.Entity("CasitaAPI.Models.User", b =>
                 {
-                    b.Navigation("Lists");
+                    b.Navigation("AppLists");
                 });
 #pragma warning restore 612, 618
         }

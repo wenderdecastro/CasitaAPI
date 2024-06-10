@@ -1,33 +1,33 @@
 ﻿using CasitaAPI.Interfaces;
+using CasitaAPI.Models;
 using CasitaAPI.Repository;
-using CasitaAPI.ViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CasitaAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : Controller
+    public class UserController : ControllerBase
     {
-        private readonly IUserRepository userRepository;
-
+        private readonly IUserRepository _userRepository;
         public UserController()
         {
-            userRepository = new UserRepository();
+            _userRepository = new UserRepository();
         }
-        [HttpPut("AlterarSenha")]
-        public IActionResult UpdatePassword(string email, ChangePasswordViewModel senha)
-        {
-            try
-            {
-                userRepository.ChangePassword(email, senha.SenhaNova!);
 
-                return Ok("Senha alterada com sucesso !");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+        [HttpGet]
+        public IActionResult Get()
+        {
+            var userList = _userRepository.GetAll();
+            return Ok(userList);
         }
+        [HttpPost]
+        public IActionResult Post(User user)
+        {
+            _userRepository.Create(user);
+            return Ok(user);
+        }
+
     }
 }
