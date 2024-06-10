@@ -26,16 +26,70 @@ namespace CasitaAPI.Controllers
             {
                 _listItemRepository.Create(item);
 
-                return Ok("");
+                return Ok("Lista Criada");
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
-                throw;
+                return BadRequest(e.Message);
             }
         
         }
 
-      
+
+        [HttpDelete]
+        public ActionResult Delete(int id)
+        {
+
+            try
+            {
+                _listItemRepository.Delete(id);
+
+                return Ok("Item Deletado");
+            }
+            catch (Exception e)
+            {
+
+
+                return BadRequest(e.Message);
+            }
+
+        }
+
+
+        [HttpPost("Concluir Lista")]
+        public ActionResult Conclude(int id) 
+        {
+            try
+            {
+                _listItemRepository.Conclude(id);
+
+                return Ok("Lista Concluida");
+            }
+            catch (Exception e) 
+            {
+                return BadRequest(e.Message);
+            }
+
+        }
+
+        [HttpPut]
+        public ActionResult Update(ListItem item, int id)
+        {
+
+            try
+            {
+                _listItemRepository.Update(id, item);
+
+                return Ok("Item Atualizado");
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
+        
+        }
+
     }
 }

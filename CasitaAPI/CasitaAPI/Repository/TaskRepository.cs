@@ -73,7 +73,7 @@ namespace CasitaAPI.Repository
                 task.DueDate = taskUpdate.DueDate;
             }
             
-            ctx.AppTasks.Update(task);
+            ctx.AppTasks.Update(task!);
             ctx.SaveChanges();
         }
     }
