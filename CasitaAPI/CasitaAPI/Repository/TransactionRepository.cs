@@ -7,11 +7,11 @@ namespace CasitaAPI.Repository
     public class TransactionRepository : ITransactionRepository
     {
 
-        private readonly CasitaContext ctx;
+        private readonly CasitaDbContext ctx;
 
         public TransactionRepository()
         {
-            ctx = new CasitaContext();
+            ctx = new CasitaDbContext();
         }
         public void Create(Transaction transaction)
         {
@@ -20,7 +20,7 @@ namespace CasitaAPI.Repository
             
         }
 
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
             try
             {

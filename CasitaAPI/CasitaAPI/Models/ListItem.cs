@@ -5,17 +5,17 @@ namespace CasitaAPI.Models;
 
 public partial class ListItem
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
     public DateTime? CreatedAt { get; set; }
 
     public string Name { get; set; } = null!;
 
-    public bool? IsConcluded { get; set; }
+    public bool? IsConcluded { get; set; } 
 
-    public int ListId { get; set; }
+    public Guid ListId { get; set; }
 
-    public int PriorityId { get; set; }
+    public Guid PriorityId { get; set; }
 
     public decimal? Value { get; set; }
 

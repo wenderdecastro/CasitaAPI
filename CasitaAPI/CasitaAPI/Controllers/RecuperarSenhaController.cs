@@ -10,10 +10,10 @@ namespace CasitaAPI.Controllers
         [ApiController]
         public class RecuperarSenhaController : ControllerBase
         {
-            private readonly CasitaContext _context;
+            private readonly CasitaDbContext _context;
             private readonly EmailSendingService _emailSendingService;
 
-            public RecuperarSenhaController(CasitaContext context, EmailSendingService emailSendingService)
+            public RecuperarSenhaController(CasitaDbContext context, EmailSendingService emailSendingService)
             {
                 _context = context;
                 _emailSendingService = emailSendingService;

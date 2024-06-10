@@ -8,19 +8,23 @@ namespace CasitaAPI.Repository
     public class TransactionListRepository : ITransactionList
     {
 
-        private readonly CasitaContext ctx;
+        private readonly CasitaDbContext ctx;
 
         public TransactionListRepository()
         {
-            ctx = new CasitaContext();
+            ctx = new CasitaDbContext();
         }
         public void Create(TransactionList tList)
         {
+            Guid id = Guid.NewGuid();
+
+            tList.Id = id;
+
             ctx.Add(tList);
             ctx.SaveChanges();
         }
 
-        public string Delete(int id)
+        public string Delete(Guid id)
         {
             TransactionList tlFound = ctx.TransactionLists.FirstOrDefault(tl => tl.Id == id)!;
 
@@ -38,7 +42,7 @@ namespace CasitaAPI.Repository
             }
         }
 
-        public List<TransactionList> GetList(int id)
+        public List<TransactionList> GetList(Guid id)
         {
             try
             {
@@ -55,7 +59,7 @@ namespace CasitaAPI.Repository
 
         }
 
-        public void Update(int id, TransactionList tList)
+        public void Update(Guid id, TransactionList tList)
         {
           TransactionList tlFound = ctx.TransactionLists.FirstOrDefault(tl => tl.Id == id)!;
 
@@ -74,7 +78,7 @@ namespace CasitaAPI.Repository
             else { return; }
         }
 
-        public void UploadPhoto(int id, string photoUrl)
+        public void UploadPhoto(Guid id, string photoUrl)
         {
             throw new NotImplementedException();
         }

@@ -52,7 +52,7 @@ namespace CasitaAPI.Repository
                     Email = user.Email,
                     Password = Cryptography.GenerateHash(user.Password),
 
-                    
+
 
                     IdNavigation = new Financial
                     {
@@ -70,7 +70,7 @@ namespace CasitaAPI.Repository
                                 Name = "Lista de Compras",
                                 AmountSpent = 0,
                                 TotalAmount = null,
-                                ListTypeId = 4,
+                                ListTypeId = id,
                                 FinantialId = id,
                                 PhotoUrl = null,
                                 PriorityId = null,
@@ -82,22 +82,24 @@ namespace CasitaAPI.Repository
                     },
                     AppLists = new List<AppList>
                     {
+                       
+
                         //Criação das listas padrões de tarefas do usuário.
                         new AppList
                         {
                             Name = "Tarefas",
-                            ListTypeId = 1
+                            ListTypeId = id
 
                         },
                         new AppList
                         {
                             Name = "Meu Dia",
-                            ListTypeId = 2
+                            ListTypeId = id
                         },
                         new AppList
                         {
                             Name = "Metas",
-                            ListTypeId = 3
+                            ListTypeId = id
                         }
 
                     },

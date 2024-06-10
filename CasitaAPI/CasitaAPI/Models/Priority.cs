@@ -5,7 +5,7 @@ namespace CasitaAPI.Models;
 
 public partial class Priority
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
     public string Description { get; set; } = null!;
 

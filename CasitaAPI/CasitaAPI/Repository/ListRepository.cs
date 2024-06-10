@@ -18,13 +18,16 @@ namespace CasitaAPI.Repository
         {
             try
             {
+                Guid id = Guid.NewGuid();
                 var newList = new AppList
                 {
+                    Id = id,
                     Name = list.Name,
                     Description = list.Description,
                     AppTasks = list.AppTasks,
                     CreatedAt = DateTime.Now,
                     UserId = list.UserId,
+                    
                 };
 
                 ctx.Add(newList);
@@ -40,7 +43,7 @@ namespace CasitaAPI.Repository
 
         }
 
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
             try
             {
@@ -62,12 +65,12 @@ namespace CasitaAPI.Repository
 
         public List<AppList> GetCustomLists(Guid userId)
         {
-            return ctx.AppLists.Where(x => x.UserId == userId && x.ListTypeId == 6).ToList();
+            return ctx.AppLists.Where(x => x.UserId == userId ).ToList();
         }
 
         public List<AppList> GetDefaultLists(Guid userId)
         {
-            return ctx.AppLists.Where(x => x.UserId == userId && x.ListTypeId != 6).ToList();
+            return ctx.AppLists.Where(x => x.UserId == userId).ToList();
 
         }
 
@@ -82,7 +85,7 @@ namespace CasitaAPI.Repository
                 AppTasks = NextTasks,
             };
 
-            var weeklyTasks = ctx.AppTasks.Where(x => x.List.UserId == userId && x.FrequencyId == 3).ToList();
+            var weeklyTasks = ctx.AppTasks.Where(x => x.List.UserId == userId ).ToList();
 
             var weeklyList = new AppList
             {
@@ -91,7 +94,7 @@ namespace CasitaAPI.Repository
             };
 
 
-            var montlyTasks = ctx.AppTasks.Where(x => x.List.UserId == userId && x.FrequencyId == 4).ToList();
+            var montlyTasks = ctx.AppTasks.Where(x => x.List.UserId == userId ).ToList();
 
             var montlyList = new AppList
             {

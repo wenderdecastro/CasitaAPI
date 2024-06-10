@@ -5,7 +5,7 @@ namespace CasitaAPI.Models;
 
 public partial class AppList
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
     public Guid UserId { get; set; }
 
@@ -15,7 +15,7 @@ public partial class AppList
 
     public DateTime? CreatedAt { get; set; }
 
-    public int? ListTypeId { get; set; }
+    public Guid? ListTypeId { get; set; }
 
     public virtual ICollection<AppTask> AppTasks { get; set; } = new List<AppTask>();
 
