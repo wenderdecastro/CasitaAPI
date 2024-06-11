@@ -2,6 +2,7 @@
 using CasitaAPI.Interfaces;
 using CasitaAPI.Models;
 using CasitaAPI.Utils;
+using Microsoft.VisualBasic;
 
 namespace CasitaAPI.Repository
 {
@@ -55,7 +56,7 @@ namespace CasitaAPI.Repository
 
 
 
-                    IdNavigation = new Financial
+                    IdNavigation = new Models.Financial
                     {
                         Id = id,
                         Balance = 0,
@@ -123,6 +124,9 @@ namespace CasitaAPI.Repository
                 };
                 ctx.Add(newUser);
                 ctx.SaveChanges();
+
+                
+                
             }
             catch (Exception e)
             {
@@ -136,12 +140,27 @@ namespace CasitaAPI.Repository
             return ctx.Users.FirstOrDefault(x => x.Id == id)!;
         }
 
-        public void Update(Guid id)
+        public void Update(User user)
         {
             try
             {
-                var user = ctx.Users.Find(id);
-                if (user == null) return;
+                var toupdate = ctx.Users.Find(user.Id);
+                if (toupdate == null) return;
+
+                //user{
+                //    Id = id,
+                //    Name = user.Name,
+                //    Email = user.Email,
+
+
+
+                //    IdNavigation 
+                //    {
+                //        WantsPercentage = financial.WantsPercentage,
+                //        NecessitiesPercentage = financial.NecessitiesPercentage,
+                //        SavingsPercentage = financial.SavingsPercentage,
+                //        ReceiptDate = financial.ReceiptDate,
+                //};
                 user.UpdatedAt = DateTime.Now;
 
                 ctx.Update(user);

@@ -53,7 +53,7 @@ namespace CasitaAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(int listId, AppTask task)
+        public IActionResult Create(Guid userId, AppTask task)
         {
             try
             {
@@ -64,13 +64,12 @@ namespace CasitaAPI.Controllers
                     CreatedAt = DateTime.Now,
                     DueDate = task.DueDate,
                     FrequencyId = task.FrequencyId,
-                    ListId = listId,
                     IsConcluded = false,
                     PriorityId = task.PriorityId,
 
                 };
 
-                _taskRepository.Create(newTask);
+                _taskRepository.Create(userId, newTask);
 
                 return StatusCode(201, task);
 

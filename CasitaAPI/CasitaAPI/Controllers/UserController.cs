@@ -31,6 +31,13 @@ namespace CasitaAPI.Controllers
             return Ok(user);
         }
 
+        [HttpPatch]
+        public IActionResult Patch(User user)
+        {
+            _userRepository.Update(user);
+            return Ok(user);
+        }
+
         
         
 

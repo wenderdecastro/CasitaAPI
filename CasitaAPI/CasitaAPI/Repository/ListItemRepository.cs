@@ -13,24 +13,13 @@ namespace CasitaAPI.Repository
         {
             ctx = new CasitaDbContext();
         }
-        public string Conclude(int id)
+        public void Conclude(int id)
         {
-            ListItem nonCloncluded = ctx.ListItems.First(l => l.Id == id);
+            var item = ctx.ListItems.Find(id);
             
-            if (nonCloncluded.IsConcluded == false) {
-
-                nonCloncluded.IsConcluded = true;
-                ctx.ListItems.Update(nonCloncluded);
-                ctx.SaveChanges();
-
-                return "Parabens por comprir a lista de tarefas";
-            }
-            else
-            {
-                return "O seu item ja foi concluido";
-            }
-
-            
+            item.IsConcluded = !item.IsConcluded;
+            ctx.ListItems.Update(item);
+            ctx.SaveChanges();
         }
 
         public void Create(ListItem item)

@@ -289,3 +289,6 @@ C:\Users\45922978810\Desktop\CasitaAPI\CasitaAPI\CasitaAPI\obj\Debug\net8.0\ref\
 C:\Users\45922978810\Desktop\CasitaAPI\CasitaAPI\CasitaAPI\bin\Debug\net8.0\Azure.Storage.Blobs.dll
 C:\Users\45922978810\Desktop\CasitaAPI\CasitaAPI\CasitaAPI\bin\Debug\net8.0\Azure.Storage.Common.dll
 C:\Users\45922978810\Desktop\CasitaAPI\CasitaAPI\CasitaAPI\bin\Debug\net8.0\System.IO.Hashing.dll
+C:\Users\57267874800\Desktop\Casita_WebApi\CasitaAPI\CasitaAPI\bin\Debug\net8.0\Azure.Storage.Blobs.dll
+C:\Users\57267874800\Desktop\Casita_WebApi\CasitaAPI\CasitaAPI\bin\Debug\net8.0\Azure.Storage.Common.dll
+C:\Users\57267874800\Desktop\Casita_WebApi\CasitaAPI\CasitaAPI\bin\Debug\net8.0\System.IO.Hashing.dll
