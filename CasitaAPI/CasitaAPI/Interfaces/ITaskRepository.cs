@@ -5,10 +5,10 @@ namespace CasitaAPI.Interfaces
     public interface ITaskRepository
     {
         public void Create( AppTask task);
-        public void Update(Guid id, AppTask task);
-        public void Delete(Guid id);
-        public void AlterStatus(Guid id);
-        public void MoveToMyDay(Guid id, Guid dayListId);
+        public void Update(int id, AppTask task);
+        public void Delete(int id);
+        public void AlterStatus(int id);
+        public void MoveToMyDay(int id, int dayListId);
 
         public List<AppTask> GetAll(Guid userId);
     }

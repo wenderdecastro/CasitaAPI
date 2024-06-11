@@ -18,10 +18,8 @@ namespace CasitaAPI.Repository
         {
             try
             {
-                Guid id = Guid.NewGuid();
                 var newList = new AppList
                 {
-                    Id = id,
                     Name = list.Name,
                     Description = list.Description,
                     AppTasks = list.AppTasks,
@@ -43,7 +41,7 @@ namespace CasitaAPI.Repository
 
         }
 
-        public void Delete(Guid id)
+        public void Delete(int id)
         {
             try
             {

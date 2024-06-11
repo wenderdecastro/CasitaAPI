@@ -5,7 +5,7 @@ namespace CasitaAPI.Models;
 
 public partial class ListType
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 
     public string? Description { get; set; }
 

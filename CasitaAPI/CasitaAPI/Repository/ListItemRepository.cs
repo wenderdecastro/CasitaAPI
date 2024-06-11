@@ -13,7 +13,7 @@ namespace CasitaAPI.Repository
         {
             ctx = new CasitaDbContext();
         }
-        public string Conclude(Guid id)
+        public string Conclude(int id)
         {
             ListItem nonCloncluded = ctx.ListItems.First(l => l.Id == id);
             
@@ -38,11 +38,8 @@ namespace CasitaAPI.Repository
             try
             {
 
-                Guid id = Guid.NewGuid();
-
                 var ListItem = new ListItem
                 {
-                    Id = id,
                     Name = item.Name,
                     CreatedAt = DateTime.Now,
                     IsConcluded = false,
@@ -66,7 +63,7 @@ namespace CasitaAPI.Repository
             
         }
 
-        public void Delete(Guid id)
+        public void Delete(int id)
         {
            ListItem foundItem = ctx.ListItems.FirstOrDefault(l => l.Id == id)!;
 
@@ -74,7 +71,7 @@ namespace CasitaAPI.Repository
             ctx.SaveChanges();
         }
 
-        public void Update(Guid id, ListItem item)
+        public void Update(int id, ListItem item)
         {
             ListItem updatedItem = ctx.ListItems.FirstOrDefault(l => l.Id == id)!;
 

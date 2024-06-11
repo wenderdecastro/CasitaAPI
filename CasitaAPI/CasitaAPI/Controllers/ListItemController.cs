@@ -37,7 +37,7 @@ namespace CasitaAPI.Controllers
 
 
         [HttpDelete]
-        public ActionResult Delete(Guid id)
+        public ActionResult Delete(int id)
         {
 
             try
@@ -57,7 +57,7 @@ namespace CasitaAPI.Controllers
 
 
         [HttpPost("Concluir Lista")]
-        public ActionResult Conclude(Guid id)
+        public ActionResult Conclude(int id)
         {
             try
             {
@@ -73,7 +73,7 @@ namespace CasitaAPI.Controllers
         }
 
         [HttpPut]
-        public ActionResult Update(ListItem item, Guid id)
+        public ActionResult Update(ListItem item, int id)
         {
 
             try

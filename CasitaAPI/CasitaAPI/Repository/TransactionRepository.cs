@@ -20,7 +20,7 @@ namespace CasitaAPI.Repository
             
         }
 
-        public void Delete(Guid id)
+        public void Delete(int id)
         {
             try
             {
