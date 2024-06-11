@@ -46,6 +46,7 @@ namespace CasitaAPI.Repository
 
                 var newUser = new User
                 {
+
                     Name = user.Name,
                     Email = user.Email,
                     Password = Cryptography.GenerateHash(user.Password),

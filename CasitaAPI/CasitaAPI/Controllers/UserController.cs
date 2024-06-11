@@ -1,6 +1,8 @@
 ﻿using CasitaAPI.Interfaces;
 using CasitaAPI.Models;
 using CasitaAPI.Repository;
+using CasitaAPI.Utils;
+using CasitaAPI.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,6 +30,9 @@ namespace CasitaAPI.Controllers
             _userRepository.Create(user);
             return Ok(user);
         }
+
+        
+        
 
     }
 }

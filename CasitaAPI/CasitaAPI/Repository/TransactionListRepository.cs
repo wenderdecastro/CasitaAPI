@@ -74,9 +74,29 @@ namespace CasitaAPI.Repository
             else { return; }
         }
 
-        public void UploadPhoto(int id, string photoUrl)
+        public void UploadPhoto(int id, string novaUrlFoto)
         {
-            throw new NotImplementedException();
+
+            try
+            {
+                TransactionList transactionFound = ctx.TransactionLists.FirstOrDefault(x => x.Id == id)!;
+
+                if (transactionFound != null)
+                {
+                    transactionFound.PhotoUrl = novaUrlFoto;
+                }
+
+                ctx.SaveChanges();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public TransactionList GetTransaction(int id)
+        {
+            return ctx.TransactionLists.FirstOrDefault(x => x.Id == id)!;
         }
     }
 }
