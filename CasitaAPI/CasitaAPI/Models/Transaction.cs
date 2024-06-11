@@ -17,7 +17,11 @@ public partial class Transaction
 
     public int? FrequencyId { get; set; }
 
+    public int? TransactionTypeId { get; set; }
+
     public virtual Frequency? Frequency { get; set; }
 
     public virtual TransactionList? List { get; set; }
+
+    public virtual TransactionType? TransactionType { get; set; }
 }

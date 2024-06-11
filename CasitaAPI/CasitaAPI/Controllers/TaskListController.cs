@@ -39,6 +39,24 @@ namespace CasitaAPI.Controllers
             }
             
         }
-   
+
+        [HttpGet("home")]
+        public ActionResult GetHome(Guid userId)
+        {
+
+            return Ok( _listRepository.GetHomeLists(userId));
+        }
+        [HttpGet("default")]
+        public ActionResult GetDefault(Guid userId)
+        {
+
+            return Ok(_listRepository.GetDefaultLists(userId));
+        }
+        [HttpGet("custom")]
+        public ActionResult GetCustom(Guid userId)
+        {
+
+            return Ok(_listRepository.GetCustomLists(userId));
+        }
     }
 }

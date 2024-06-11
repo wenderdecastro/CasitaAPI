@@ -63,27 +63,29 @@ namespace CasitaAPI.Repository
 
         public List<AppList> GetCustomLists(Guid userId)
         {
-            return ctx.AppLists.Where(x => x.UserId == userId ).ToList();
+            return ctx.AppLists.Where(x => x.UserId == userId && x.ListTypeId == 6).ToList();
         }
 
         public List<AppList> GetDefaultLists(Guid userId)
         {
-            return ctx.AppLists.Where(x => x.UserId == userId).ToList();
+            return ctx.AppLists.Where(x => x.UserId == userId && x.ListTypeId == 7 && x.ListTypeId == 4).ToList();
 
         }
 
-        public List<AppList> GetDateLists(Guid userId, int option)
+        public object[] GetHomeLists(Guid userId)
         {
+            var date = DateOnly.FromDateTime(DateTime.Now.AddDays(7));
             var today = DateOnly.FromDateTime(DateTime.Now);
-            var NextTasks = ctx.AppTasks.Where(x => x.List.UserId == userId && x.DueDate.Value > today).ToList();
+            var nextweek = DateOnly.FromDateTime(DateTime.Now);
+            var NextTasks = ctx.AppTasks.Where(x => x.List.UserId == userId && x.DueDate.Value > date).ToList();
 
             var nextList = new AppList
             {
-                Name = "Diarias",
+                Name = "Próximas",
                 AppTasks = NextTasks,
             };
 
-            var weeklyTasks = ctx.AppTasks.Where(x => x.List.UserId == userId ).ToList();
+            var weeklyTasks = ctx.AppTasks.Where(x => x.List.UserId == userId && x.FrequencyId == 3 && x.DueDate.Value >= today).ToList();
 
             var weeklyList = new AppList
             {
@@ -92,7 +94,7 @@ namespace CasitaAPI.Repository
             };
 
 
-            var montlyTasks = ctx.AppTasks.Where(x => x.List.UserId == userId ).ToList();
+            var montlyTasks = ctx.AppTasks.Where(x => x.List.UserId == userId && x.FrequencyId == 4 && x.DueDate.Value >= today).ToList();
 
             var montlyList = new AppList
             {
@@ -100,7 +102,37 @@ namespace CasitaAPI.Repository
                 AppTasks = montlyTasks,
             };
 
-            List<AppList> list = new List<AppList> { nextList, weeklyList, montlyList };
+
+            
+            var cartCount = 0;
+            var cart = ctx.TransactionLists.FirstOrDefault(x => x.ListTypeId == 4 && x.FinantialId == userId);
+
+            if (cart != null)
+            {
+                cartCount = cart.ListItems.Count();
+            };
+
+            var shoppingList = new 
+            {
+                Name = "Lista de Compras",
+                ItemsCount = cartCount
+            };
+
+            var goalsCount = 0;
+            var goals = ctx.AppLists.FirstOrDefault(x => x.ListTypeId == 7 && x.UserId == userId);
+
+            if (goals != null)
+            {
+                goalsCount = goals.AppTasks.Count();
+            };
+
+            var objectivesList = new
+            {
+                Name = "Objetivos",
+                ItemsCount = goalsCount
+            };
+
+            object[] list = [shoppingList, objectivesList ,nextList, weeklyList, montlyList];
 
             return list;
         }

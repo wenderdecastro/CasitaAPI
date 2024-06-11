@@ -56,7 +56,7 @@ namespace CasitaAPI.Controllers
         }
 
 
-        [HttpPost("Concluir Lista")]
+        [HttpPost("conclude")]
         public ActionResult Conclude(int id)
         {
             try
@@ -89,5 +89,7 @@ namespace CasitaAPI.Controllers
             }
 
         }
+
+        
     }
 }

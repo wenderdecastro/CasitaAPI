@@ -67,6 +67,9 @@ namespace CasitaAPI.Controllers
 
                 return Ok(new
                 {
+                    usuarioBuscado.Id,
+                    usuarioBuscado.Name,
+                    usuarioBuscado.Email,
                     token = new JwtSecurityTokenHandler().WriteToken(meuToken)
                 });
             }

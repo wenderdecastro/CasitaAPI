@@ -17,6 +17,8 @@ public partial class Financial
 
     public decimal WantsPercentage { get; set; }
 
+    public decimal? MonthlyIncome { get; set; }
+
     public virtual ICollection<TransactionList> TransactionLists { get; set; } = new List<TransactionList>();
 
     public virtual User? User { get; set; }
