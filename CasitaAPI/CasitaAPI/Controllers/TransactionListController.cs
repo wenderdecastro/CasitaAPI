@@ -17,7 +17,7 @@ namespace CasitaAPI.Controllers
             _transactionRepository = new TransactionListRepository(); 
         }
 
-        [HttpPut("AlterarFotoPerfil")]
+        [HttpPut("AlterarFotoLista")]
         public async Task<IActionResult> UpdateProfileImage(int id, [FromForm] UserViewModel form)
         {
             try
