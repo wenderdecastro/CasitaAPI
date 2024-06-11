@@ -42,12 +42,10 @@ namespace CasitaAPI.Repository
 
             try
             {
-                Guid id = Guid.NewGuid();
                 var financial = user.IdNavigation;
 
                 var newUser = new User
                 {
-                    Id = id,
                     Name = user.Name,
                     Email = user.Email,
                     Password = Cryptography.GenerateHash(user.Password),
@@ -56,7 +54,7 @@ namespace CasitaAPI.Repository
 
                     IdNavigation = new Financial
                     {
-                        Id = id,
+                      
                         Balance = 0,
                         WantsPercentage = financial.WantsPercentage,
                         NecessitiesPercentage = financial.NecessitiesPercentage,
@@ -70,10 +68,9 @@ namespace CasitaAPI.Repository
                                 Name = "Lista de Compras",
                                 AmountSpent = 0,
                                 TotalAmount = null,
-                                ListTypeId = id,
-                                FinantialId = id,
                                 PhotoUrl = null,
                                 PriorityId = null,
+                                ListTypeId = 4
 
                             },
 
@@ -88,18 +85,18 @@ namespace CasitaAPI.Repository
                         new AppList
                         {
                             Name = "Tarefas",
-                            ListTypeId = id
+                            ListTypeId = 1
 
                         },
                         new AppList
                         {
                             Name = "Meu Dia",
-                            ListTypeId = id
+                            ListTypeId = 2
                         },
                         new AppList
                         {
                             Name = "Metas",
-                            ListTypeId = id
+                            ListTypeId = 3
                         }
 
                     },

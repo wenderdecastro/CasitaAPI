@@ -5,6 +5,6 @@ namespace CasitaAPI.Interfaces
     public interface ITransactionRepository
     {
         public void Create(Transaction transaction);
-        public void Delete(Guid id);
+        public void Delete(int id);
     }
 }

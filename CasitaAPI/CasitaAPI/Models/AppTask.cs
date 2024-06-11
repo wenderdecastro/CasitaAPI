@@ -5,21 +5,21 @@ namespace CasitaAPI.Models;
 
 public partial class AppTask
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 
     public DateTime? CreatedAt { get; set; }
 
-    public Guid? PriorityId { get; set; }
+    public int? PriorityId { get; set; }
 
-    public Guid? ListId { get; set; }
+    public int? ListId { get; set; }
 
     public string? Description { get; set; }
 
     public DateOnly? DueDate { get; set; }
 
-    public bool? IsConcluded { get; set; } = 
+    public bool? IsConcluded { get; set; }
 
-    public Guid? FrequencyId { get; set; }
+    public int? FrequencyId { get; set; }
 
     public DateTime? ConcludedDate { get; set; }
 

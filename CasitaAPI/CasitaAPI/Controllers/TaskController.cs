@@ -19,7 +19,7 @@ namespace CasitaAPI.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(Guid id)
+        public IActionResult Delete(int id)
         {
             try
             {
@@ -39,7 +39,7 @@ namespace CasitaAPI.Controllers
         }
 
         [HttpPatch("{id}")]
-        public IActionResult Update(Guid id, AppTask taskUpdate)
+        public IActionResult Update(int id, AppTask taskUpdate)
         {
             try
             {
@@ -53,7 +53,7 @@ namespace CasitaAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Guid listId, AppTask task)
+        public IActionResult Create(int listId, AppTask task)
         {
             try
             {
@@ -85,7 +85,7 @@ namespace CasitaAPI.Controllers
         }
 
         [HttpPatch("conclude/{id}")]
-        public IActionResult Conclude (Guid id)
+        public IActionResult Conclude (int id)
         {
             try
             {
@@ -99,7 +99,7 @@ namespace CasitaAPI.Controllers
         }
 
         [HttpPatch("myday/{id}")]
-        public IActionResult MoveToMyDay(Guid id, Guid listId)
+        public IActionResult MoveToMyDay(int id, int listId)
         {
             try
             {
