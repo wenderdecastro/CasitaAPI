@@ -15,8 +15,6 @@ public partial class User
 
     public string? RecoveryCode { get; set; }
 
-    public string? PhotoUrl { get; set; }
-
     public DateOnly CreatedAt { get; set; }
 
     public DateTime? UpdatedAt { get; set; }

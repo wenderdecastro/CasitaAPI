@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace CasitaAPI.Repository
 {
-    public class TransactionListRepository : ITransactionList
+    public class TransactionListRepository : ITransactionListRepository
     {
 
         private readonly CasitaDbContext ctx;
@@ -78,5 +78,49 @@ namespace CasitaAPI.Repository
         {
             throw new NotImplementedException();
         }
+        public List<TransactionList> GetLimits(Guid userID)
+        {
+            var finance = ctx.Financials.FirstOrDefault(x => x.Id == userID);
+
+            var Necessities = ctx.Transactions.Where(x => x.TransactionTypeId == 1).ToList();
+            var Wishes = ctx.Transactions.Where(x => x.TransactionTypeId == 2).ToList();
+            var Savings = ctx.Transactions.Where(x => x.TransactionTypeId == 3).ToList();
+
+
+
+            var Contas = new TransactionList
+            {
+                Name = "Contas",
+                FinantialId = userID,
+                TotalAmount = finance.MonthlyIncome * finance.NecessitiesPercentage,
+                AmountSpent = Necessities.Sum(x => x.Value).Value,
+                Transactions = Necessities
+            };
+            var Desejos = new TransactionList
+            {
+                Name = "Desejos",
+                FinantialId = userID,
+                TotalAmount = finance.MonthlyIncome * finance.NecessitiesPercentage,
+                AmountSpent = Wishes.Sum(x => x.Value).Value,
+                Transactions = Wishes
+            };
+            var Economias = new TransactionList
+            {
+                Name = "Economias",
+                FinantialId = userID,
+                TotalAmount = finance.MonthlyIncome * finance.NecessitiesPercentage,
+                AmountSpent = Savings.Sum(x => x.Value).Value,
+                Transactions = Savings
+            };
+
+            var list = new List<TransactionList>
+            {
+                Contas, Desejos, Economias
+            };
+
+            return list;
+
+        }
+
     }
 }

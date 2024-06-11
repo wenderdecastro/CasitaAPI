@@ -42,10 +42,13 @@ namespace CasitaAPI.Repository
 
             try
             {
+
+                var id = Guid.NewGuid();
                 var financial = user.IdNavigation;
 
                 var newUser = new User
                 {
+                    Id = id,
                     Name = user.Name,
                     Email = user.Email,
                     Password = Cryptography.GenerateHash(user.Password),
@@ -54,7 +57,7 @@ namespace CasitaAPI.Repository
 
                     IdNavigation = new Financial
                     {
-                      
+                        Id = id,
                         Balance = 0,
                         WantsPercentage = financial.WantsPercentage,
                         NecessitiesPercentage = financial.NecessitiesPercentage,
@@ -65,6 +68,7 @@ namespace CasitaAPI.Repository
                             //Criação da lista padrão de compras do usuário
                             new TransactionList
                             {
+                                FinantialId = id,
                                 Name = "Lista de Compras",
                                 AmountSpent = 0,
                                 TotalAmount = null,
@@ -85,18 +89,32 @@ namespace CasitaAPI.Repository
                         new AppList
                         {
                             Name = "Tarefas",
-                            ListTypeId = 1
+                            ListTypeId = 1,
+                            UserId = id,
+                            
+
+                        },
+                        new AppList
+                        {
+                            Name = "Objetivos",
+                            ListTypeId = 7,
+                            UserId = id,
+                            
 
                         },
                         new AppList
                         {
                             Name = "Meu Dia",
-                            ListTypeId = 2
+                            ListTypeId = 2,
+                            UserId = id,
+
                         },
                         new AppList
                         {
                             Name = "Metas",
-                            ListTypeId = 3
+                            ListTypeId = 3,
+                            UserId = id,
+
                         }
 
                     },
@@ -168,6 +186,7 @@ namespace CasitaAPI.Repository
         {
             return ctx.Users.ToList();
         }
+
     }
 
 

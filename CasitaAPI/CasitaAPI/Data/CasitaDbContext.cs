@@ -34,6 +34,8 @@ public partial class CasitaDbContext : DbContext
 
     public virtual DbSet<TransactionList> TransactionLists { get; set; }
 
+    public virtual DbSet<TransactionType> TransactionTypes { get; set; }
+
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -126,6 +128,10 @@ public partial class CasitaDbContext : DbContext
             entity.Property(e => e.Balance)
                 .HasColumnType("money")
                 .HasColumnName("balance");
+            entity.Property(e => e.MonthlyIncome)
+                .HasDefaultValue(0m)
+                .HasColumnType("money")
+                .HasColumnName("monthly_income");
             entity.Property(e => e.NecessitiesPercentage)
                 .HasColumnType("decimal(3, 2)")
                 .HasColumnName("necessities_percentage");
@@ -219,6 +225,7 @@ public partial class CasitaDbContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("name");
+            entity.Property(e => e.TransactionTypeId).HasColumnName("transaction_type_id");
             entity.Property(e => e.Value)
                 .HasColumnType("money")
                 .HasColumnName("value");
@@ -230,6 +237,10 @@ public partial class CasitaDbContext : DbContext
             entity.HasOne(d => d.List).WithMany(p => p.Transactions)
                 .HasForeignKey(d => d.ListId)
                 .HasConstraintName("FK_Transaction_TransactionList");
+
+            entity.HasOne(d => d.TransactionType).WithMany(p => p.Transactions)
+                .HasForeignKey(d => d.TransactionTypeId)
+                .HasConstraintName("FK_Transaction_TransactionType");
         });
 
         modelBuilder.Entity<TransactionList>(entity =>
@@ -271,6 +282,16 @@ public partial class CasitaDbContext : DbContext
                 .HasConstraintName("FK_TransactionList_Priority");
         });
 
+        modelBuilder.Entity<TransactionType>(entity =>
+        {
+            entity.ToTable("TransactionType");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Description)
+                .HasMaxLength(16)
+                .HasColumnName("description");
+        });
+
         modelBuilder.Entity<User>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK_user");
@@ -293,9 +314,6 @@ public partial class CasitaDbContext : DbContext
             entity.Property(e => e.Password)
                 .HasMaxLength(64)
                 .HasColumnName("password");
-            entity.Property(e => e.PhotoUrl)
-                .HasMaxLength(128)
-                .HasColumnName("photo_url");
             entity.Property(e => e.RecoveryCode)
                 .HasMaxLength(4)
                 .IsUnicode(false)
