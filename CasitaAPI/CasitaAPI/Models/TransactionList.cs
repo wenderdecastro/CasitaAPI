@@ -5,7 +5,7 @@ namespace CasitaAPI.Models;
 
 public partial class TransactionList
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
     public decimal AmountSpent { get; set; }
 
@@ -19,9 +19,9 @@ public partial class TransactionList
 
     public string? PhotoUrl { get; set; }
 
-    public int? PriorityId { get; set; }
+    public Guid? PriorityId { get; set; }
 
-    public int? ListTypeId { get; set; }
+    public Guid? ListTypeId { get; set; }
 
     public DateOnly? RenovationDate { get; set; }
 

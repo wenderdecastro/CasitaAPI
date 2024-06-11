@@ -5,7 +5,7 @@ namespace CasitaAPI.Models;
 
 public partial class Transaction
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
     public decimal? Value { get; set; }
 
@@ -13,9 +13,9 @@ public partial class Transaction
 
     public string? Name { get; set; }
 
-    public int? ListId { get; set; }
+    public Guid? ListId { get; set; }
 
-    public int? FrequencyId { get; set; }
+    public Guid? FrequencyId { get; set; }
 
     public virtual Frequency? Frequency { get; set; }
 

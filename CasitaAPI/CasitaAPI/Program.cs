@@ -30,7 +30,7 @@ builder.Services.AddSwaggerGen(options =>
         //}
     });
 });
-builder.Services.AddDbContext<CasitaContext>(options =>
+builder.Services.AddDbContext<CasitaDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("SqlDataBase")));
 
 // Configure EmailSettings

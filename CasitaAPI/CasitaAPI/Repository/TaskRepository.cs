@@ -13,7 +13,7 @@ namespace CasitaAPI.Repository
             ctx = new CasitaDbContext();
         }
 
-        public void AlterStatus(int id)
+        public void AlterStatus(Guid id)
         {
             var task = ctx.AppTasks.FirstOrDefault(t => t.Id == id);
             task.IsConcluded = !task.IsConcluded;
@@ -29,7 +29,7 @@ namespace CasitaAPI.Repository
                 
         }
 
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
             var task = ctx.AppTasks.Find(id);
             ctx.AppTasks.Remove(task);
@@ -37,14 +37,14 @@ namespace CasitaAPI.Repository
 
         }
 
-        public void MoveToMyDay(int id)
+        public void MoveToMyDay(Guid id, Guid dayListId)
         {
             var task = ctx.AppTasks.Find(id);
-            task.ListId = 2;
+            task.ListId = dayListId;
             ctx.SaveChanges();
         }
 
-        public void Update(int id, AppTask taskUpdate)
+        public void Update(Guid id, AppTask taskUpdate)
         {
             var task = ctx.AppTasks.Find(id);
 
@@ -73,7 +73,7 @@ namespace CasitaAPI.Repository
                 task.DueDate = taskUpdate.DueDate;
             }
             
-            ctx.AppTasks.Update(task);
+            ctx.AppTasks.Update(task!);
             ctx.SaveChanges();
         }
 
