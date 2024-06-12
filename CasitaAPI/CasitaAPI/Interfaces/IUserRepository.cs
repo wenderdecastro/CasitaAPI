@@ -11,5 +11,7 @@ namespace CasitaAPI.Interfaces
         public bool ChangePassword(string email, string newPassword);
         public List<User> GetAll();
 
+      
+
     }
 }
