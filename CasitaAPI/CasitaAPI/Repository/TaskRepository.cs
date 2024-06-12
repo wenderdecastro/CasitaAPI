@@ -26,7 +26,7 @@ namespace CasitaAPI.Repository
 
             var list = ctx.AppLists.FirstOrDefault(x => x.UserId == userId && x.ListTypeId == 1);
             newTask.ListId = list.Id;
-                ctx.AppTasks.Add(newTask);
+            ctx.AppTasks.Add(newTask);
                 ctx.SaveChanges();
                 
         }

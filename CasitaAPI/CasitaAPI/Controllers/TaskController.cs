@@ -34,8 +34,7 @@ namespace CasitaAPI.Controllers
 
         [HttpGet]
         public IActionResult GetAll(Guid userId) {
-            var taskList = _taskRepository.GetAll(userId);
-            return Ok(taskList);
+            return Ok(_taskRepository.GetAll(userId));
         }
 
         [HttpPatch("{id}")]
@@ -66,14 +65,14 @@ namespace CasitaAPI.Controllers
                     FrequencyId = task.FrequencyId,
                     IsConcluded = false,
                     PriorityId = task.PriorityId,
-
+                    DueTime = task.DueTime,
+                    ConcludedDate = task.ConcludedDate,
+                    ResetDate = task.ResetDate,
                 };
 
                 _taskRepository.Create(userId, newTask);
 
                 return StatusCode(201, task);
-
-
 
             }
             catch (Exception e)

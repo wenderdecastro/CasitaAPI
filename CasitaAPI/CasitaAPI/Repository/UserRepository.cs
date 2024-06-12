@@ -92,7 +92,7 @@ namespace CasitaAPI.Repository
                             Name = "Tarefas",
                             ListTypeId = 1,
                             UserId = id,
-                            
+
 
                         },
                         new AppList
@@ -100,7 +100,7 @@ namespace CasitaAPI.Repository
                             Name = "Objetivos",
                             ListTypeId = 7,
                             UserId = id,
-                            
+
 
                         },
                         new AppList
@@ -120,13 +120,13 @@ namespace CasitaAPI.Repository
 
                     },
                     UpdatedAt = DateTime.Now,
-                    
+
                 };
                 ctx.Add(newUser);
                 ctx.SaveChanges();
 
-                
-                
+
+
             }
             catch (Exception e)
             {
@@ -147,23 +147,13 @@ namespace CasitaAPI.Repository
                 var toupdate = ctx.Users.Find(user.Id);
                 if (toupdate == null) return;
 
-                //user{
-                //    Id = id,
-                //    Name = user.Name,
-                //    Email = user.Email,
+                toupdate.IdNavigation.WantsPercentage = user.IdNavigation.WantsPercentage;
+                toupdate.IdNavigation.NecessitiesPercentage = user.IdNavigation.NecessitiesPercentage;
+                toupdate.IdNavigation.SavingsPercentage = user.IdNavigation.SavingsPercentage;
+                toupdate.IdNavigation.ReceiptDate = user.IdNavigation.ReceiptDate;
+                toupdate.UpdatedAt = DateTime.Now;
 
-
-
-                //    IdNavigation 
-                //    {
-                //        WantsPercentage = financial.WantsPercentage,
-                //        NecessitiesPercentage = financial.NecessitiesPercentage,
-                //        SavingsPercentage = financial.SavingsPercentage,
-                //        ReceiptDate = financial.ReceiptDate,
-                //};
-                user.UpdatedAt = DateTime.Now;
-
-                ctx.Update(user);
+                ctx.Update(toupdate);
                 ctx.SaveChanges();
 
             }
@@ -178,17 +168,9 @@ namespace CasitaAPI.Repository
         {
             try
             {
-                var user = ctx.Users.Select(u => new User
-                {
-                    Id = u.Id,
-                    Email = u.Email,
-                    Password = u.Password,
-                    Name = u.Name,
-                    
-                 
-                }).FirstOrDefault
-                (x => x.Email == email);
+                var user = ctx.Users.FirstOrDefault(x => x.Email == email);
 
+                user.IdNavigation = ctx.Financials.FirstOrDefault(x => x.Id == user.Id);
                 if (user == null) return null!;
 
                 if (!Cryptography.MatchHash(senha, user.Password!)) return null!;

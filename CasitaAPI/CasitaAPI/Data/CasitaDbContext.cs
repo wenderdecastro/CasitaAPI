@@ -97,6 +97,7 @@ public partial class CasitaDbContext : DbContext
             entity.Property(e => e.DueDate).HasColumnName("due_date");
             entity.Property(e => e.DueTime)
                 .HasPrecision(0)
+                .HasColumnType("time")
                 .HasColumnName("due_time");
             entity.Property(e => e.FrequencyId).HasColumnName("frequency_id");
             entity.Property(e => e.IsConcluded)
@@ -315,7 +316,7 @@ public partial class CasitaDbContext : DbContext
                 .HasMaxLength(64)
                 .HasColumnName("password");
             entity.Property(e => e.RecoveryCode)
-                .HasMaxLength(4)
+                .HasMaxLength(5)
                 .IsUnicode(false)
                 .IsFixedLength()
                 .HasColumnName("recovery_code");

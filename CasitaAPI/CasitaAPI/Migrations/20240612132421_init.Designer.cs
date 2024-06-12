@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CasitaAPI.Migrations
 {
     [DbContext(typeof(CasitaDbContext))]
-    [Migration("20240607121611_Init")]
-    partial class Init
+    [Migration("20240612132421_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -115,7 +115,7 @@ namespace CasitaAPI.Migrations
                         .HasDefaultValue(false)
                         .HasColumnName("is_concluded");
 
-                    b.Property<int>("ListId")
+                    b.Property<int?>("ListId")
                         .HasColumnType("int")
                         .HasColumnName("list_id");
 
@@ -128,6 +128,10 @@ namespace CasitaAPI.Migrations
                     b.Property<int?>("PriorityId")
                         .HasColumnType("int")
                         .HasColumnName("priority_id");
+
+                    b.Property<DateOnly?>("ResetDate")
+                        .HasColumnType("date")
+                        .HasColumnName("reset_date");
 
                     b.HasKey("Id")
                         .HasName("PK_Task");
@@ -148,6 +152,12 @@ namespace CasitaAPI.Migrations
                     b.Property<decimal>("Balance")
                         .HasColumnType("money")
                         .HasColumnName("balance");
+
+                    b.Property<decimal?>("MonthlyIncome")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("money")
+                        .HasDefaultValue(0m)
+                        .HasColumnName("monthly_income");
 
                     b.Property<decimal>("NecessitiesPercentage")
                         .HasColumnType("decimal(3, 2)")
@@ -304,6 +314,10 @@ namespace CasitaAPI.Migrations
                         .HasColumnType("varchar(50)")
                         .HasColumnName("name");
 
+                    b.Property<int?>("TransactionTypeId")
+                        .HasColumnType("int")
+                        .HasColumnName("transaction_type_id");
+
                     b.Property<decimal?>("Value")
                         .HasColumnType("money")
                         .HasColumnName("value");
@@ -313,6 +327,8 @@ namespace CasitaAPI.Migrations
                     b.HasIndex("FrequencyId");
 
                     b.HasIndex("ListId");
+
+                    b.HasIndex("TransactionTypeId");
 
                     b.ToTable("Transaction", (string)null);
                 });
@@ -379,6 +395,25 @@ namespace CasitaAPI.Migrations
                     b.ToTable("TransactionList", (string)null);
                 });
 
+            modelBuilder.Entity("CasitaAPI.Models.TransactionType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(16)
+                        .HasColumnType("nvarchar(16)")
+                        .HasColumnName("description");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TransactionType", (string)null);
+                });
+
             modelBuilder.Entity("CasitaAPI.Models.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -412,15 +447,10 @@ namespace CasitaAPI.Migrations
                         .HasColumnType("nvarchar(64)")
                         .HasColumnName("password");
 
-                    b.Property<string>("PhotoUrl")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)")
-                        .HasColumnName("photo_url");
-
                     b.Property<string>("RecoveryCode")
-                        .HasMaxLength(4)
+                        .HasMaxLength(5)
                         .IsUnicode(false)
-                        .HasColumnType("char(4)")
+                        .HasColumnType("char(5)")
                         .HasColumnName("recovery_code")
                         .IsFixedLength();
 
@@ -500,9 +530,16 @@ namespace CasitaAPI.Migrations
                         .HasForeignKey("ListId")
                         .HasConstraintName("FK_Transaction_TransactionList");
 
+                    b.HasOne("CasitaAPI.Models.TransactionType", "TransactionType")
+                        .WithMany("Transactions")
+                        .HasForeignKey("TransactionTypeId")
+                        .HasConstraintName("FK_Transaction_TransactionType");
+
                     b.Navigation("Frequency");
 
                     b.Navigation("List");
+
+                    b.Navigation("TransactionType");
                 });
 
             modelBuilder.Entity("CasitaAPI.Models.TransactionList", b =>
@@ -578,6 +615,11 @@ namespace CasitaAPI.Migrations
                 {
                     b.Navigation("ListItems");
 
+                    b.Navigation("Transactions");
+                });
+
+            modelBuilder.Entity("CasitaAPI.Models.TransactionType", b =>
+                {
                     b.Navigation("Transactions");
                 });
 
