@@ -34,7 +34,7 @@ namespace CasitaAPI.Controllers
 
                     //Gera um código aleatório com 4 algarismos
                     Random random = new Random();
-                    int recoveryCode = random.Next(1000, 9999);
+                    int recoveryCode = random.Next(10000, 99999);
 
                     user.RecoveryCode = recoveryCode.ToString();
 
