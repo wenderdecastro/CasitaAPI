@@ -103,7 +103,6 @@ namespace CasitaAPI.Repository
             };
 
 
-            
             var cartCount = 0;
             var cart = ctx.TransactionLists.FirstOrDefault(x => x.ListTypeId == 4 && x.FinantialId == userId);
 

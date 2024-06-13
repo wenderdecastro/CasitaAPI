@@ -1,5 +1,6 @@
 ﻿using CasitaAPI.Data;
 using CasitaAPI.Utils.Mail;
+using CasitaAPI.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,12 +11,12 @@ namespace CasitaAPI.Controllers
         [ApiController]
         public class RecuperarSenhaController : ControllerBase
         {
-            private readonly CasitaDbContext _context;
+            private readonly CasitaDbContext ctx;
             private readonly EmailSendingService _emailSendingService;
 
             public RecuperarSenhaController(CasitaDbContext context, EmailSendingService emailSendingService)
             {
-                _context = context;
+                ctx = context;
                 _emailSendingService = emailSendingService;
             }
 
@@ -25,7 +26,7 @@ namespace CasitaAPI.Controllers
                 try
                 {
                     //Busca o usuário pelo email
-                    var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+                    var user = await ctx.Users.FirstOrDefaultAsync(u => u.Email == email);
 
                     if (user == null)
                     {
@@ -38,16 +39,16 @@ namespace CasitaAPI.Controllers
 
                     user.RecoveryCode = recoveryCode.ToString();
 
-                    await _context.SaveChangesAsync();
+                    await ctx.SaveChangesAsync();
 
                     //Envia código de4 confirmação por email
-                    await _emailSendingService.SendRecoveryEmail(user.Email!, recoveryCode);
+                    await _emailSendingService.SendRecoveryEmail(user.Name,user.Email!, recoveryCode);
 
                     return Ok("Código de recuperação enviado com sucesso!");
                 }
                 catch (Exception ex)
                 {
-                    return BadRequest(ex.Message);
+                    return BadRequest(ex.InnerException);
                 }
             }
 
@@ -56,7 +57,7 @@ namespace CasitaAPI.Controllers
             {
                 try
                 {
-                    var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+                    var user = await ctx.Users.FirstOrDefaultAsync(u => u.Email == email);
 
                     if (user == null)
                     {
@@ -70,7 +71,7 @@ namespace CasitaAPI.Controllers
 
                     user.RecoveryCode = null;
 
-                    await _context.SaveChangesAsync();
+                    await ctx.SaveChangesAsync();
 
                     return Ok("Código de recuperação está correto!");
                 }
@@ -79,5 +80,7 @@ namespace CasitaAPI.Controllers
                     return BadRequest(ex.Message);
                 }
             }
-        }
+
+        
+    }
     }

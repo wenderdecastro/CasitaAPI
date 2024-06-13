@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CasitaAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,7 +20,8 @@ namespace CasitaAPI.Migrations
                     balance = table.Column<decimal>(type: "money", nullable: false),
                     necessities_percentage = table.Column<decimal>(type: "decimal(3,2)", nullable: false),
                     savings_percentage = table.Column<decimal>(type: "decimal(3,2)", nullable: false),
-                    wants_percentage = table.Column<decimal>(type: "decimal(3,2)", nullable: false)
+                    wants_percentage = table.Column<decimal>(type: "decimal(3,2)", nullable: false),
+                    monthly_income = table.Column<decimal>(type: "money", nullable: true, defaultValue: 0m)
                 },
                 constraints: table =>
                 {
@@ -67,6 +68,19 @@ namespace CasitaAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TransactionType",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    description = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TransactionType", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "User",
                 columns: table => new
                 {
@@ -74,8 +88,7 @@ namespace CasitaAPI.Migrations
                     name = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
                     email = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     password = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
-                    recovery_code = table.Column<string>(type: "char(4)", unicode: false, fixedLength: true, maxLength: 4, nullable: true),
-                    photo_url = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
+                    recovery_code = table.Column<string>(type: "char(5)", unicode: false, fixedLength: true, maxLength: 5, nullable: true),
                     created_at = table.Column<DateOnly>(type: "date", nullable: false, defaultValueSql: "(getdate())"),
                     updated_at = table.Column<DateTime>(type: "datetime", nullable: true)
                 },
@@ -190,7 +203,8 @@ namespace CasitaAPI.Migrations
                     created_at = table.Column<DateTime>(type: "datetime", nullable: true, defaultValueSql: "(getdate())"),
                     name = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: true),
                     list_id = table.Column<int>(type: "int", nullable: true),
-                    frequency_id = table.Column<int>(type: "int", nullable: true)
+                    frequency_id = table.Column<int>(type: "int", nullable: true),
+                    transaction_type_id = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -205,6 +219,11 @@ namespace CasitaAPI.Migrations
                         column: x => x.list_id,
                         principalTable: "TransactionList",
                         principalColumn: "id");
+                    table.ForeignKey(
+                        name: "FK_Transaction_TransactionType",
+                        column: x => x.transaction_type_id,
+                        principalTable: "TransactionType",
+                        principalColumn: "id");
                 });
 
             migrationBuilder.CreateTable(
@@ -215,14 +234,15 @@ namespace CasitaAPI.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     created_at = table.Column<DateTime>(type: "datetime", nullable: true, defaultValueSql: "(getdate())"),
                     priority_id = table.Column<int>(type: "int", nullable: true),
-                    list_id = table.Column<int>(type: "int", nullable: false),
+                    list_id = table.Column<int>(type: "int", nullable: true),
                     description = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: true),
                     due_date = table.Column<DateOnly>(type: "date", nullable: true),
                     is_concluded = table.Column<bool>(type: "bit", nullable: true, defaultValue: false),
                     frequency_id = table.Column<int>(type: "int", nullable: true),
                     concluded_date = table.Column<DateTime>(type: "datetime", nullable: true),
                     name = table.Column<string>(type: "nvarchar(32)", maxLength: 32, nullable: false),
-                    due_time = table.Column<TimeOnly>(type: "time(0)", precision: 0, nullable: true)
+                    due_time = table.Column<TimeOnly>(type: "time(0)", precision: 0, nullable: true),
+                    reset_date = table.Column<DateOnly>(type: "date", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -280,6 +300,11 @@ namespace CasitaAPI.Migrations
                 column: "list_id");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Transaction_transaction_type_id",
+                table: "Transaction",
+                column: "transaction_type_id");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TransactionList_finantial_id",
                 table: "TransactionList",
                 column: "finantial_id");
@@ -315,6 +340,9 @@ namespace CasitaAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "TransactionList");
+
+            migrationBuilder.DropTable(
+                name: "TransactionType");
 
             migrationBuilder.DropTable(
                 name: "User");

@@ -23,7 +23,7 @@ namespace CasitaAPI.Controllers
                 _listItemRepository.Create(item);
 
                
-                return Ok("Lista Criada");
+                return Ok();
             }
            
             catch (Exception e)

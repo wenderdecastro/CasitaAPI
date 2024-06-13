@@ -29,7 +29,7 @@ namespace CasitaAPI.Controllers
             try
             {
                 //busca usuário por email e senha 
-                User usuarioBuscado = _userRepository.GetByEmailAndPwd(user.Email!, user.Password!);
+                var usuarioBuscado = _userRepository.GetByEmailAndPwd(user.Email!, user.Password!);
 
                 //caso não encontre
                 if (usuarioBuscado == null)
@@ -47,6 +47,10 @@ namespace CasitaAPI.Controllers
                     new Claim(JwtRegisteredClaimNames.Email, usuarioBuscado.Email!),
                     new Claim(JwtRegisteredClaimNames.Name,usuarioBuscado.Name!),
                     new Claim(JwtRegisteredClaimNames.Jti, usuarioBuscado.Id.ToString()),
+                    new Claim("MonthlyIncome", usuarioBuscado.IdNavigation.MonthlyIncome.Value.ToString()),
+                    new Claim("Necessities", usuarioBuscado.IdNavigation.NecessitiesPercentage.ToString()),
+                    new Claim("Wants", usuarioBuscado.IdNavigation.WantsPercentage.ToString()),
+                    new Claim("Savings", usuarioBuscado.IdNavigation.SavingsPercentage.ToString()),
 
                 };
 
@@ -67,9 +71,6 @@ namespace CasitaAPI.Controllers
 
                 return Ok(new
                 {
-                    usuarioBuscado.Id,
-                    usuarioBuscado.Name,
-                    usuarioBuscado.Email,
                     token = new JwtSecurityTokenHandler().WriteToken(meuToken)
                 });
             }

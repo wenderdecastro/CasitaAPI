@@ -21,10 +21,12 @@ namespace CasitaAPI.Repository
             ctx.SaveChanges();
         }
 
-        public void Create(AppTask newTask)
+        public void Create( Guid userId, AppTask newTask)
         {
 
-                ctx.AppTasks.Add(newTask);
+            var list = ctx.AppLists.FirstOrDefault(x => x.UserId == userId && x.ListTypeId == 1);
+            newTask.ListId = list.Id;
+            ctx.AppTasks.Add(newTask);
                 ctx.SaveChanges();
                 
         }
@@ -41,6 +43,7 @@ namespace CasitaAPI.Repository
         {
             var task = ctx.AppTasks.Find(id);
             task.ListId = dayListId;
+            ctx.AppTasks.Update(task);
             ctx.SaveChanges();
         }
 

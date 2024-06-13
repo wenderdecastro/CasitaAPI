@@ -31,13 +31,21 @@ namespace CasitaAPI.Controllers
             return Ok(user);
         }
 
+        [HttpPatch]
+        public IActionResult Patch(User user)
+        {
+            _userRepository.Update(user);
+            return Ok(user);
+        }
 
         [HttpPut("ChangePassword")]
         public IActionResult UpdatePassword(string email, ChangePasswordViewModel senha)
         {
             try
             {
-                _userRepository.ChangePassword(email, senha.SenhaNova!);
+
+                var pwd = Cryptography.GenerateHash(senha.SenhaNova!);
+                _userRepository.ChangePassword(email, pwd);
 
                 return Ok("Senha alterada com sucesso !");
             }
@@ -46,6 +54,9 @@ namespace CasitaAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+
+
 
     }
 }
