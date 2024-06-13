@@ -11,9 +11,10 @@ namespace CasitaAPI.Interfaces
         public string Delete(int id);
         public void UploadPhoto(int id, string photoUrl);
 
-
+        
         public TransactionList GetTransaction(int id);
         public List<TransactionList> GetLimits(Guid userId);
+
 
 
 

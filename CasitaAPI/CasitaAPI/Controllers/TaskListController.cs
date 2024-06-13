@@ -46,6 +46,8 @@ namespace CasitaAPI.Controllers
 
             return Ok( _listRepository.GetHomeLists(userId));
         }
+
+        
         [HttpGet("default")]
         public ActionResult GetDefault(Guid userId)
         {

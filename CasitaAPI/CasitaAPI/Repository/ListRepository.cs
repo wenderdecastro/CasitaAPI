@@ -56,6 +56,8 @@ namespace CasitaAPI.Repository
 
         }
 
+        
+
         public List<AppList> GetAllLists(Guid userId)
         {
             return ctx.AppLists.Where(x => x.UserId == userId).ToList();
@@ -77,7 +79,7 @@ namespace CasitaAPI.Repository
             var date = DateOnly.FromDateTime(DateTime.Now.AddDays(7));
             var today = DateOnly.FromDateTime(DateTime.Now);
             var nextweek = DateOnly.FromDateTime(DateTime.Now);
-            var NextTasks = ctx.AppTasks.Where(x => x.List.UserId == userId && x.DueDate.Value > date).ToList();
+            var NextTasks = ctx.AppTasks.Where(x => x.List.UserId == userId).ToList();
 
             var nextList = new AppList
             {

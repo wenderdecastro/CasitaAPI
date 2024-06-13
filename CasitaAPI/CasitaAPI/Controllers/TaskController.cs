@@ -17,6 +17,12 @@ namespace CasitaAPI.Controllers
         {
             _taskRepository = new TaskRepository();
         }
+        [HttpGet("myday")]
+        public ActionResult GetMyDay(Guid userId)
+        {
+
+            return Ok(_taskRepository.GetMyDay(userId));
+        }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
@@ -52,7 +58,7 @@ namespace CasitaAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Guid userId, AppTask task)
+        public IActionResult Create(Guid userId, AppTask task, int listType)
         {
             try
             {
@@ -70,7 +76,7 @@ namespace CasitaAPI.Controllers
                     ResetDate = task.ResetDate,
                 };
 
-                _taskRepository.Create(userId, newTask);
+                _taskRepository.Create(userId, newTask, listType);
 
                 return StatusCode(201, task);
 
@@ -97,11 +103,11 @@ namespace CasitaAPI.Controllers
         }
 
         [HttpPatch("myday/{id}")]
-        public IActionResult MoveToMyDay(int id, int listId)
+        public IActionResult MoveToMyDay(int id)
         {
             try
             {
-                _taskRepository.MoveToMyDay(id, listId);
+                _taskRepository.MoveToMyDay(id, 2);
                 return StatusCode(200);
             }
             catch (Exception e)

@@ -21,13 +21,32 @@ namespace CasitaAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(TransactionList tList)
+        public async Task<IActionResult> Create([FromForm] TransactionListVM Transaction)
         {
             try
             {
+
+                var containerName = "casita";
+                var connectionString = "DefaultEndpointsProtocol=https;AccountName=casitastorage;AccountKey=SUbgY9W4S0NwGe1yufbl0AVygbkn25RfE6rvuDJZP1lU3QBfSJw1RX7phvHOPj10+IW69fh9Rj7R+AStL+jXKA==;EndpointSuffix=core.windows.net";
+
+                string fotoUrlFound = await AzureBlobStorageHelper.UploadImageBlobAsync(Transaction.Photo!, connectionString!, containerName!);
+
+
+                var tList = new TransactionList
+                {
+                    CreatedAt = DateOnly.FromDateTime(DateTime.Now),
+                    AmountSpent = 0,
+                    ListTypeId = 3,
+                    FinantialId = Transaction.FinantialId,
+                    Name = Transaction.Name,
+                    TotalAmount = Transaction.TotalAmount,
+                };
+                tList.PhotoUrl = fotoUrlFound;
+
+
                 _transactionRepository.Create(tList);
 
-                return Ok(tList);
+                return  Ok(tList);
             }
             catch (Exception e)
             {
@@ -37,7 +56,7 @@ namespace CasitaAPI.Controllers
 
         }
 
-
+        
 
         [HttpPut]
         public IActionResult Update(int id, TransactionList tList)

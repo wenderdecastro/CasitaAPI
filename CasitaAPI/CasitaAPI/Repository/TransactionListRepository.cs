@@ -43,7 +43,7 @@ namespace CasitaAPI.Repository
             try
             {
 
-                    return ctx.TransactionLists.Where(tl => tl.FinantialId == id).ToList();
+                    return ctx.TransactionLists.Where(tl => tl.FinantialId == id && tl.ListTypeId == 3).ToList();
 
             }
             catch (Exception e)
@@ -98,6 +98,8 @@ namespace CasitaAPI.Repository
         {
             return ctx.TransactionLists.FirstOrDefault(x => x.Id == id)!;
         }
+
+        
         public List<TransactionList> GetLimits(Guid userID)
         {
             var finance = ctx.Financials.FirstOrDefault(x => x.Id == userID);
@@ -141,6 +143,7 @@ namespace CasitaAPI.Repository
             return list;
 
         }
-       
+
+        
     }
 }

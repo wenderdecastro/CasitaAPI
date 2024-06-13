@@ -70,6 +70,17 @@ namespace CasitaAPI.Repository
                             new TransactionList
                             {
                                 FinantialId = id,
+                                Name = "Default",
+                                AmountSpent = 0,
+                                TotalAmount = null,
+                                PhotoUrl = null,
+                                PriorityId = null,
+                                ListTypeId = 1
+
+                            },
+                            new TransactionList
+                            {
+                                FinantialId = id,
                                 Name = "Lista de Compras",
                                 AmountSpent = 0,
                                 TotalAmount = null,

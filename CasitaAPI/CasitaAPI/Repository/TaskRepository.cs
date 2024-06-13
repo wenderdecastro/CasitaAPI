@@ -1,6 +1,7 @@
 ﻿using CasitaAPI.Data;
 using CasitaAPI.Interfaces;
 using CasitaAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CasitaAPI.Repository
 {
@@ -17,14 +18,23 @@ namespace CasitaAPI.Repository
         {
             var task = ctx.AppTasks.FirstOrDefault(t => t.Id == id);
             task.IsConcluded = !task.IsConcluded;
+            task.ConcludedDate = DateTime.Now;  
             ctx.AppTasks.Update(task);
             ctx.SaveChanges();
         }
 
-        public void Create( Guid userId, AppTask newTask)
+        public List<AppTask> GetMyDay(Guid userId)
         {
 
-            var list = ctx.AppLists.FirstOrDefault(x => x.UserId == userId && x.ListTypeId == 1);
+            var myday = ctx.AppLists.Include(x => x.AppTasks).FirstOrDefault(x => x.UserId == userId && x.ListTypeId == 2);
+
+            return ctx.AppTasks.Where(x => x.ListId == myday.Id).ToList();
+        }
+
+        public void Create( Guid userId, AppTask newTask, int listTypeId)
+        {
+
+            var list = ctx.AppLists.FirstOrDefault(x => x.UserId == userId && x.ListTypeId == listTypeId);
             newTask.ListId = list.Id;
             ctx.AppTasks.Add(newTask);
                 ctx.SaveChanges();
@@ -75,7 +85,11 @@ namespace CasitaAPI.Repository
             {
                 task.DueDate = taskUpdate.DueDate;
             }
-            
+            if (taskUpdate.DueTime != null)
+            {
+                task.DueTime = taskUpdate.DueTime;
+            }
+
             ctx.AppTasks.Update(task!);
             ctx.SaveChanges();
         }

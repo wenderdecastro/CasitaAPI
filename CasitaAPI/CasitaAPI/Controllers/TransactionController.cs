@@ -37,6 +37,21 @@ namespace CasitaAPI.Controllers
         
         }
 
+        [HttpPost("spentOnGoal")]
+        public IActionResult AddGoalFunds(int goalId, decimal amount)
+        {
+            try
+            {
+                var transaction = _transactionRepository.AddGoalFunds(goalId, amount);
+                return Ok(transaction);
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
+        }
+
         [HttpDelete]
         public IActionResult DeleteTransaction(int id) 
         {
@@ -51,6 +66,22 @@ namespace CasitaAPI.Controllers
             {
 
                 return BadRequest();
+            }
+        }
+
+        [HttpGet]
+        public IActionResult ApplyCart(Guid userId)
+        {
+            try
+            {
+                var transaction = _transactionRepository.ApplyCartItems(userId);
+
+                return Ok(transaction);
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e);
             }
         }
     }
