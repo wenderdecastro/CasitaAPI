@@ -18,6 +18,13 @@ namespace CasitaAPI.Controllers
             _transactionRepository = new TransactionRepository();
         }
 
+        [HttpPost("buyCartItems")]
+        public IActionResult Get(Guid userId)
+        {
+            var userList = _transactionRepository.ApplyCartItems(userId);
+            return Ok(userList);
+        }
+
         [HttpPost]
         public IActionResult GetTransaction(Transaction transaction) 
         {

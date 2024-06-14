@@ -74,6 +74,26 @@ namespace CasitaAPI.Repository
 
         }
 
+        public TransactionList getCart(Guid userId)
+        {
+            return ctx.TransactionLists.FirstOrDefault(x => x.ListTypeId == 4 && x.FinantialId == userId);
+
+        }
+
+        public List<AppList> GetListOfLists(Guid userId)
+        {
+
+            var list = new List<AppList>();
+
+            var goals = ctx.AppLists.FirstOrDefault(x => x.ListTypeId == 7 && x.UserId == userId);
+            var customLists = ctx.AppLists.Where(x => x.ListTypeId == 6).ToArray();
+
+            list.Add(goals);
+            list.AddRange(customLists);
+            return list;
+
+        }
+
         public object[] GetHomeLists(Guid userId)
         {
             var date = DateOnly.FromDateTime(DateTime.Now.AddDays(7));

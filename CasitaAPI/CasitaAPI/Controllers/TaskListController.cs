@@ -23,6 +23,18 @@ namespace CasitaAPI.Controllers
             return Ok(_listRepository.GetAllLists(id));
         }
 
+        [HttpGet("cart")]
+        public IActionResult GetList(Guid id)
+        {
+            return Ok(_listRepository.GetListOfLists(id));
+        }
+        [HttpGet("otherLists")]
+        public IActionResult GetCart(Guid id)
+        {
+            return Ok(_listRepository.getCart(id));
+        }
+
+
         [HttpPost]
         public IActionResult Post(AppList list)
         {

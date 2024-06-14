@@ -24,6 +24,15 @@ namespace CasitaAPI.Controllers
             var userList = _userRepository.GetAll();
             return Ok(userList);
         }
+
+
+
+        [HttpGet("{id}")]
+        public IActionResult GetById(Guid id)
+        {
+            var user = _userRepository.GetUser(id);
+            return Ok(user);
+        }
         [HttpPost]
         public IActionResult Post(User user)
         {
@@ -32,20 +41,20 @@ namespace CasitaAPI.Controllers
         }
 
         [HttpPatch]
-        public IActionResult Patch(User user)
+        public IActionResult Patch(Guid userId, Financial userFinancial)
         {
-            _userRepository.Update(user);
-            return Ok(user);
+            _userRepository.Update(userId, userFinancial);
+
+            return Ok(userFinancial);
         }
 
-        [HttpPut("ChangePassword")]
-        public IActionResult UpdatePassword(string email, ChangePasswordViewModel senha)
+        [HttpPatch("ChangePassword")]
+        public IActionResult UpdatePassword(string email, string senha)
         {
             try
             {
 
-                var pwd = Cryptography.GenerateHash(senha.SenhaNova!);
-                _userRepository.ChangePassword(email, pwd);
+                _userRepository.ChangePassword(email, senha);
 
                 return Ok("Senha alterada com sucesso !");
             }

@@ -1,6 +1,7 @@
 ﻿using CasitaAPI.Data;
 using CasitaAPI.Interfaces;
 using CasitaAPI.Models;
+using CasitaAPI.ViewModels;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace CasitaAPI.Repository
@@ -42,8 +43,14 @@ namespace CasitaAPI.Repository
         {
             try
             {
-
-                    return ctx.TransactionLists.Where(tl => tl.FinantialId == id && tl.ListTypeId == 3).ToList();
+                var list = ctx.TransactionLists.Where(tl => tl.FinantialId == id && tl.ListTypeId == 3).ToList();
+                foreach (var item in list)
+                {
+                    item.AmountSpent = (decimal)ctx.Transactions.Where(x => x.ListId == item.Id).Sum(x => x.Value);
+                    ctx.Update(item);
+                }
+                ctx.SaveChanges();
+                return list;
 
             }
             catch (Exception e)
@@ -94,48 +101,82 @@ namespace CasitaAPI.Repository
             }
         }
 
+        //public object[] GetMonthlyTransactions(Guid userId)
+        //{
+        //    return List;
+        //}
+
         public TransactionList GetTransaction(int id)
         {
             return ctx.TransactionLists.FirstOrDefault(x => x.Id == id)!;
         }
 
         
-        public List<TransactionList> GetLimits(Guid userID)
+        public List<TListVM> GetLimits(Guid userID)
         {
             var finance = ctx.Financials.FirstOrDefault(x => x.Id == userID);
 
             var Necessities = ctx.Transactions.Where(x => x.TransactionTypeId == 1).ToList();
-            var Wishes = ctx.Transactions.Where(x => x.TransactionTypeId == 2).ToList();
-            var Savings = ctx.Transactions.Where(x => x.TransactionTypeId == 3).ToList();
 
-
-
-            var Contas = new TransactionList
+            var NecessitiesList = ctx.Transactions.Where(x => x.TransactionTypeId == 1).ToList().GroupBy(x=> x.CreatedAt.Value).Select(c=> new HistoryVM
             {
+                Month = c.Key.Month,
+                Year = c.Key.Year,
+                Items = c.ToList()
+
+            }).ToList();
+
+
+
+            var Wishes = ctx.Transactions.Where(x => x.TransactionTypeId == 2).ToList();
+            var WishesList = Wishes.GroupBy(x => x.CreatedAt.Value).Select(c => new HistoryVM
+            {
+                Month = c.Key.Month,
+                Year = c.Key.Year,
+                Items = c.ToList()
+
+            }).ToList();
+
+            var Savings = ctx.Transactions.Where(x => x.TransactionTypeId == 3).ToList();
+            var SavingsList = Savings.ToList().GroupBy(x => x.CreatedAt.Value).Select(c => new HistoryVM
+            {
+                Month = c.Key.Month,
+                Year = c.Key.Year,
+                Items = c.ToList()
+
+            }).ToList();
+
+
+
+            var Contas = new TListVM
+            {
+                TransactionTypeId = 1,
                 Name = "Contas",
                 FinantialId = userID,
                 TotalAmount = finance.MonthlyIncome * finance.NecessitiesPercentage,
                 AmountSpent = Necessities.Sum(x => x.Value).Value,
-                Transactions = Necessities
+                Transactions = NecessitiesList
             };
-            var Desejos = new TransactionList
+            var Desejos = new TListVM
             {
+                TransactionTypeId = 2,
                 Name = "Desejos",
                 FinantialId = userID,
                 TotalAmount = finance.MonthlyIncome * finance.NecessitiesPercentage,
                 AmountSpent = Wishes.Sum(x => x.Value).Value,
-                Transactions = Wishes
+                Transactions = WishesList
             };
-            var Economias = new TransactionList
+            var Economias = new TListVM
             {
+                TransactionTypeId = 3,
                 Name = "Economias",
                 FinantialId = userID,
                 TotalAmount = finance.MonthlyIncome * finance.NecessitiesPercentage,
                 AmountSpent = Savings.Sum(x => x.Value).Value,
-                Transactions = Savings
+                Transactions = SavingsList
             };
 
-            var list = new List<TransactionList>
+            var list = new List<TListVM>
             {
                 Contas, Desejos, Economias
             };

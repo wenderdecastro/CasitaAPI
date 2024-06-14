@@ -26,16 +26,26 @@ namespace CasitaAPI.Repository
         public List<AppTask> GetMyDay(Guid userId)
         {
 
-            var myday = ctx.AppLists.Include(x => x.AppTasks).FirstOrDefault(x => x.UserId == userId && x.ListTypeId == 2);
-
-            return ctx.AppTasks.Where(x => x.ListId == myday.Id).ToList();
+            var myday = ctx.AppLists.FirstOrDefault(x => x.UserId == userId && x.ListTypeId == 2);
+            if (myday == null) { return null; }
+            var teste = ctx.AppTasks.Where(x => x.ListId == myday.Id).ToList();
+            return teste;
         }
 
         public void Create( Guid userId, AppTask newTask, int listTypeId)
         {
+            DateOnly today = DateOnly.FromDateTime(DateTime.Now);
+
+            if (newTask.DueDate == today)
+            {
+                listTypeId = 2;
+            }
 
             var list = ctx.AppLists.FirstOrDefault(x => x.UserId == userId && x.ListTypeId == listTypeId);
             newTask.ListId = list.Id;
+
+
+
             ctx.AppTasks.Add(newTask);
                 ctx.SaveChanges();
                 

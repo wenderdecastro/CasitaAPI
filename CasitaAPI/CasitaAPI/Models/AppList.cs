@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace CasitaAPI.Models;
 
@@ -21,5 +22,6 @@ public partial class AppList
 
     public virtual ListType? ListType { get; set; }
 
-    public virtual User User { get; set; } = null!;
+    [JsonIgnore]
+    public virtual User? User { get; set; }
 }

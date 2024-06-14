@@ -117,6 +117,7 @@ public partial class CasitaDbContext : DbContext
             entity.HasOne(d => d.List).WithMany(p => p.AppTasks)
                 .HasForeignKey(d => d.ListId)
                 .HasConstraintName("FK_Task_List");
+
         });
 
         modelBuilder.Entity<Financial>(entity =>

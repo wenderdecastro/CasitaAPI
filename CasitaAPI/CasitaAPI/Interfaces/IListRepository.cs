@@ -7,6 +7,8 @@ namespace CasitaAPI.Interfaces
         public void Create(AppList list);
         public List<AppList> GetDefaultLists(Guid userId);
         public List<AppList> GetCustomLists(Guid userId);
+        public List<AppList> GetListOfLists(Guid userId);
+        public TransactionList getCart(Guid userId);
 
         public object[] GetHomeLists(Guid userId);
 

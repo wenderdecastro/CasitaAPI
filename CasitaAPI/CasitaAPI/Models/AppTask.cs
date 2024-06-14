@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace CasitaAPI.Models;
 
@@ -31,5 +32,6 @@ public partial class AppTask
 
     public virtual Frequency? Frequency { get; set; }
 
+    [JsonIgnore]
     public virtual AppList? List { get; set; }
 }

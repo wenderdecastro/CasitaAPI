@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace CasitaAPI.Models;
 
@@ -21,5 +22,6 @@ public partial class Financial
 
     public virtual ICollection<TransactionList> TransactionLists { get; set; } = new List<TransactionList>();
 
+    [JsonIgnore]
     public virtual User? User { get; set; }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace CasitaAPI.Models;
 
@@ -21,6 +22,7 @@ public partial class Transaction
 
     public virtual Frequency? Frequency { get; set; }
 
+    [JsonIgnore]
     public virtual TransactionList? List { get; set; }
 
     public virtual TransactionType? TransactionType { get; set; }
