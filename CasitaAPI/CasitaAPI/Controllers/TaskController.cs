@@ -88,6 +88,37 @@ namespace CasitaAPI.Controllers
             }
         }
 
+        [HttpPost("custom")]
+        public IActionResult CreateToCustom(Guid userId, AppTask task, int listId)
+        {
+            try
+            {
+                var newTask = new AppTask
+                {
+                    Name = task.Name,
+                    Description = task.Description,
+                    CreatedAt = DateTime.Now,
+                    DueDate = task.DueDate,
+                    FrequencyId = task.FrequencyId,
+                    IsConcluded = false,
+                    PriorityId = task.PriorityId,
+                    DueTime = task.DueTime,
+                    ConcludedDate = task.ConcludedDate,
+                    ResetDate = task.ResetDate,
+                };
+
+                _taskRepository.CreateToCustomList(userId, newTask, listId);
+
+                return StatusCode(201, task);
+
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.InnerException);
+            }
+        }
+
         [HttpPatch("conclude/{id}")]
         public IActionResult Conclude (int id)
         {

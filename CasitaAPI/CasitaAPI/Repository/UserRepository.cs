@@ -17,6 +17,11 @@ namespace CasitaAPI.Repository
             ctx = new CasitaDbContext();
         }
 
+        public decimal getMoney(Guid id)
+        {
+            return ctx.Financials.FirstOrDefault(x => x.Id == id).Balance;
+        }
+
         public bool ChangePassword(string email, string newPassword)
         {
             try
@@ -159,6 +164,9 @@ namespace CasitaAPI.Repository
                 var toupdate = ctx.Financials.Find(userId);
                 if (toupdate == null) return;
 
+                toupdate.Balance = (decimal)ctx.Transactions.Where(x => x.List.FinantialId == userId).Sum(x => x.Value);
+
+                toupdate.MonthlyIncome = financial.MonthlyIncome;
                 toupdate.WantsPercentage = financial.WantsPercentage;
                 toupdate.NecessitiesPercentage = financial.NecessitiesPercentage;
                 toupdate.SavingsPercentage = financial.SavingsPercentage;

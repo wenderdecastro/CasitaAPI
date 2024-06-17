@@ -12,5 +12,6 @@ namespace CasitaAPI.Interfaces
         public List<AppTask> GetMyDay(Guid userId);
 
         public List<AppTask> GetAll(Guid userId);
+        public void CreateToCustomList(Guid userId, AppTask newTask, int listId);
     }
 }

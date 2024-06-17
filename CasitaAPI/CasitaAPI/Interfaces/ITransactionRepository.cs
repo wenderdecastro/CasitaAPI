@@ -8,6 +8,7 @@ namespace CasitaAPI.Interfaces
         public void Delete(int id);
         public Transaction AddGoalFunds(int goalId, decimal amount);
         public Transaction ApplyCartItems(Guid userId);
+        public object getMonthTransactions(Guid userID);
 
     }
 }

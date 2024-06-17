@@ -3,6 +3,8 @@ using CasitaAPI.Interfaces;
 using CasitaAPI.Models;
 using CasitaAPI.ViewModels;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace CasitaAPI.Repository
 {
@@ -62,6 +64,8 @@ namespace CasitaAPI.Repository
 
         }
 
+        
+
         public void Update(int id, TransactionList tList)
         {
           TransactionList tlFound = ctx.TransactionLists.FirstOrDefault(tl => tl.Id == id)!;
@@ -110,39 +114,38 @@ namespace CasitaAPI.Repository
         {
             return ctx.TransactionLists.FirstOrDefault(x => x.Id == id)!;
         }
-
-        
         public List<TListVM> GetLimits(Guid userID)
         {
+            var user = ctx.Financials.Find(userID);
+
+            user.Balance = (decimal)ctx.Transactions.Where(x => x.List.FinantialId == userID).Sum(x => x.Value);
+
             var finance = ctx.Financials.FirstOrDefault(x => x.Id == userID);
 
             var Necessities = ctx.Transactions.Where(x => x.TransactionTypeId == 1).ToList();
 
-            var NecessitiesList = ctx.Transactions.Where(x => x.TransactionTypeId == 1).ToList().GroupBy(x=> x.CreatedAt.Value).Select(c=> new HistoryVM
+            var NecessitiesList = ctx.Transactions.Where(x => x.TransactionTypeId == 1).ToList().GroupBy(x=> x.CreatedAt.Value.Month).Select(c=> new HistoryVM
             {
-                Month = c.Key.Month,
-                Year = c.Key.Year,
-                Items = c.ToList()
+                Month = c.Key,
+                Items = c.Where(x=> x.CreatedAt.Value.Month == c.Key).ToList()
 
             }).ToList();
 
 
 
             var Wishes = ctx.Transactions.Where(x => x.TransactionTypeId == 2).ToList();
-            var WishesList = Wishes.GroupBy(x => x.CreatedAt.Value).Select(c => new HistoryVM
+            var WishesList = Wishes.GroupBy(x => x.CreatedAt.Value.Month).Select(c => new HistoryVM
             {
-                Month = c.Key.Month,
-                Year = c.Key.Year,
-                Items = c.ToList()
+                Month = c.Key,
+                Items = c.Where(x => x.CreatedAt.Value.Month == c.Key).ToList()
 
             }).ToList();
 
             var Savings = ctx.Transactions.Where(x => x.TransactionTypeId == 3).ToList();
-            var SavingsList = Savings.ToList().GroupBy(x => x.CreatedAt.Value).Select(c => new HistoryVM
+            var SavingsList = Savings.ToList().GroupBy(x => x.CreatedAt.Value.Month).Select(c => new HistoryVM
             {
-                Month = c.Key.Month,
-                Year = c.Key.Year,
-                Items = c.ToList()
+                Month = c.Key,
+                Items = c.Where(x => x.CreatedAt.Value.Month == c.Key).ToList()
 
             }).ToList();
 

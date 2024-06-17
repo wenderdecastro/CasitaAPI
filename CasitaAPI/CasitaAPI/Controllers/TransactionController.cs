@@ -91,5 +91,12 @@ namespace CasitaAPI.Controllers
                 return BadRequest(e);
             }
         }
+
+        [HttpGet("month")]
+        public IActionResult GetMonth(Guid id)
+        {
+            return Ok(_transactionRepository.getMonthTransactions(id));
+        }
+
     }
 }

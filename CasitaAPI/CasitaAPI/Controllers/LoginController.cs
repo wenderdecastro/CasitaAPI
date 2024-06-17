@@ -48,9 +48,10 @@ namespace CasitaAPI.Controllers
                     new Claim(JwtRegisteredClaimNames.Name,usuarioBuscado.Name!),
                     new Claim(JwtRegisteredClaimNames.Jti, usuarioBuscado.Id.ToString()),
                     new Claim("MonthlyIncome", usuarioBuscado.IdNavigation.MonthlyIncome.Value.ToString()),
-                    new Claim("Necessities", usuarioBuscado.IdNavigation.NecessitiesPercentage.ToString()),
-                    new Claim("Wants", usuarioBuscado.IdNavigation.WantsPercentage.ToString()),
-                    new Claim("Savings", usuarioBuscado.IdNavigation.SavingsPercentage.ToString()),
+                    new Claim("Necessities", (usuarioBuscado.IdNavigation.NecessitiesPercentage * 100).ToString()),
+                    new Claim("Wants", (usuarioBuscado.IdNavigation.WantsPercentage * 100).ToString()),
+                    new Claim("Savings", (usuarioBuscado.IdNavigation.SavingsPercentage * 100).ToString()),
+                    new Claim("Balance", usuarioBuscado.IdNavigation.Balance.ToString()),
 
                 };
 

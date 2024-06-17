@@ -10,8 +10,10 @@ namespace CasitaAPI.Interfaces
         public User GetByEmailAndPwd(string email, string senha);
         public bool ChangePassword(string email, string newPassword);
         public List<User> GetAll();
+        public decimal getMoney(Guid id);
 
-      
+
+
 
     }
 }

@@ -51,6 +51,19 @@ namespace CasitaAPI.Repository
                 
         }
 
+        public void CreateToCustomList(Guid userId, AppTask newTask, int listId)
+        {
+
+            var list = ctx.AppLists.FirstOrDefault(x => x.UserId == userId && x.Id == listId);
+            newTask.ListId = list.Id;
+
+
+
+            ctx.AppTasks.Add(newTask);
+            ctx.SaveChanges();
+
+        }
+
         public void Delete(int id)
         {
             var task = ctx.AppTasks.Find(id);

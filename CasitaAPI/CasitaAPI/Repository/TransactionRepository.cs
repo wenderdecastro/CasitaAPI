@@ -2,6 +2,7 @@
 using CasitaAPI.Interfaces;
 using CasitaAPI.Models;
 using Newtonsoft.Json.Linq;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace CasitaAPI.Repository
 {
@@ -16,9 +17,12 @@ namespace CasitaAPI.Repository
         }
         public void Create(Transaction transaction)
         {
+
             ctx.Transactions.Add(transaction);
             ctx.SaveChanges();
-            
+
+
+
         }
 
         public Transaction AddGoalFunds( int goalId, decimal amount)
@@ -33,7 +37,7 @@ namespace CasitaAPI.Repository
                 ListId = goal.Id
             };
 
-            goal.Transactions.Add(transaction);
+            Create(transaction);
 
             var spent = goal.Transactions.Sum(x => x.Value);
 
@@ -92,12 +96,25 @@ namespace CasitaAPI.Repository
                 ListId = defaultList.Id
             };
 
+            ctx.Update(defaultList);
+            ctx.Update(cart);
             ctx.Transactions.Add(transaction);
             ctx.SaveChanges();
 
             return transaction;
 
 
+        }
+
+        public object getMonthTransactions (Guid userID)
+        {
+            var despesas = ctx.Transactions.Where(x=> x.CreatedAt.Value.Month == DateTime.Now.Month && x.Value < 0).Sum(x=> x.Value);
+            var entradas = ctx.Transactions.Where(x=> x.CreatedAt.Value.Month == DateTime.Now.Month && x.Value > 0).Sum(x=> x.Value);
+            return new
+            {
+                Entradas = entradas,
+                Despesas = despesas,
+            };
         }
     }
 }

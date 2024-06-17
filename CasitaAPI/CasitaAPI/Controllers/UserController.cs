@@ -25,6 +25,13 @@ namespace CasitaAPI.Controllers
             return Ok(userList);
         }
 
+        [HttpGet("balance")]
+        public IActionResult GetBalance(Guid id) {
+
+            return Ok(_userRepository.getMoney(id));
+        
+        }
+
 
 
         [HttpGet("{id}")]

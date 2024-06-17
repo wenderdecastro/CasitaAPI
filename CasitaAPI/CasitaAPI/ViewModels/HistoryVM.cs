@@ -7,7 +7,6 @@ namespace CasitaAPI.ViewModels
     {
 
         public int Month { get; set; }
-        public int Year { get; set; }
 
         public List<Transaction> Items { get; set; }
     }
