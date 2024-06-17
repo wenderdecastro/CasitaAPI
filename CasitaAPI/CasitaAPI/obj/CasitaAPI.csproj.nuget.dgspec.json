@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\57267874800\\Desktop\\Casita_WebApi\\CasitaAPI\\CasitaAPI\\CasitaAPI.csproj": {}
+    "C:\\Users\\admin\\Videos\\api\\CasitaAPI\\CasitaAPI\\CasitaAPI\\CasitaAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\57267874800\\Desktop\\Casita_WebApi\\CasitaAPI\\CasitaAPI\\CasitaAPI.csproj": {
+    "C:\\Users\\admin\\Videos\\api\\CasitaAPI\\CasitaAPI\\CasitaAPI\\CasitaAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\57267874800\\Desktop\\Casita_WebApi\\CasitaAPI\\CasitaAPI\\CasitaAPI.csproj",
+        "projectUniqueName": "C:\\Users\\admin\\Videos\\api\\CasitaAPI\\CasitaAPI\\CasitaAPI\\CasitaAPI.csproj",
         "projectName": "CasitaAPI",
-        "projectPath": "C:\\Users\\57267874800\\Desktop\\Casita_WebApi\\CasitaAPI\\CasitaAPI\\CasitaAPI.csproj",
-        "packagesPath": "C:\\Users\\57267874800\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\57267874800\\Desktop\\Casita_WebApi\\CasitaAPI\\CasitaAPI\\obj\\",
+        "projectPath": "C:\\Users\\admin\\Videos\\api\\CasitaAPI\\CasitaAPI\\CasitaAPI\\CasitaAPI.csproj",
+        "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\admin\\Videos\\api\\CasitaAPI\\CasitaAPI\\CasitaAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\57267874800\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -39,6 +39,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -47,7 +52,7 @@
           "dependencies": {
             "Azure.Identity": {
               "target": "Package",
-              "version": "[1.11.3, )"
+              "version": "[1.11.4, )"
             },
             "Azure.Storage.Blobs": {
               "target": "Package",
@@ -113,7 +118,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
